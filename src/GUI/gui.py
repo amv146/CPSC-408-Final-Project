@@ -2,9 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
 
+from GUI.Tree import Tree
+
 class App(tk.Tk):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
         self.geometry("1000x500")
         self.title('Scooby-Doo Database')
@@ -16,7 +18,6 @@ class App(tk.Tk):
         self.columnconfigure(2, weight=1)
 
         self.selection()
-        self.table()
     
     def selection(self):
         filter_label = ttk.Label(self, text="Filters")
@@ -25,34 +26,16 @@ class App(tk.Tk):
         series_label = ttk.Label(self, text="Series Name:")
         series_label.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
     
-    def table(self):
+    def table(self, df):
 
-        columns = ('first_name', 'last_name', 'email')
-        tree = ttk.Treeview(self, columns=columns, show='headings')
-
-        # define headings
-        tree.heading('first_name', text='First Name')
-        tree.heading('last_name', text='Last Name')
-        tree.heading('email', text='Email')
-
-        tree.bind('<<TreeviewSelect>>', self.item_selected)
-        tree.grid(row=3, column=1, sticky=tk.NSEW)
-
-        # add a scrollbar
-        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=tree.yview)
-        tree.configure(yscroll=scrollbar.set)
+        self.tree = Tree(self, df)
+        self.tree.grid(row=3, column=1, sticky=tk.NSEW)
+        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
+        self.tree.configure(yscroll=scrollbar.set)
         scrollbar.grid(row=3, column=2, sticky='ns')
 
-        # generate sample data
-        contacts = []
-        for n in range(1, 100):
-            contacts.append((f'first {n}', f'last {n}', f'email{n}@example.com'))
 
-        # add data to the treeview
-        for contact in contacts:
-            tree.insert('', tk.END, values=contact)
-
-        return tree
+        return self.tree
 
     def item_selected(self, event):
         for selected_item in self.tree.selection():

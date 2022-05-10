@@ -4,6 +4,7 @@ import pandas as pd
 from pandas import DataFrame
 from mysql.connector import CMySQLConnection
 import base64
+from Utils import *
 
 class Database:
   def __init__(self, database_name: str):
@@ -69,12 +70,12 @@ class Database:
 
   def store_password(self, password: str):
     encoded = base64.b64encode(password.encode('utf-8'))
-    with open('../data/data.txt', 'w+') as file:
+    with open(get_project_root().__str__() + '/data/data.txt', 'w+') as file:
       file.write(str(encoded, 'utf-8'))
     
   def get_password(self) -> str | None:
     try:
-      with open('../data/data.txt') as file:
+      with open(get_project_root().__str__() + '/data/data.txt') as file:
         password = file.read()
     except:
       return None
