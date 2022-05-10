@@ -4,7 +4,7 @@ from tkinter.messagebox import showinfo
 
 class App(tk.Tk):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
         self.geometry("1000x500")
         self.title('Scooby-Doo Database')
@@ -15,10 +15,10 @@ class App(tk.Tk):
         self.columnconfigure(1, weight=3)
         self.columnconfigure(2, weight=1)
 
-        self.selection()
+        self.filters()
         self.table()
     
-    def selection(self):
+    def filters(self):
         filter_label = ttk.Label(self, text="Filters")
         filter_label.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
 
@@ -27,7 +27,7 @@ class App(tk.Tk):
     
     def table(self):
 
-        columns = ('first_name', 'last_name', 'email')
+        columns = ('', 'last_name', 'email')
         tree = ttk.Treeview(self, columns=columns, show='headings')
 
         # define headings
@@ -55,7 +55,7 @@ class App(tk.Tk):
         return tree
 
     def item_selected(self, event):
-        for selected_item in self.tree.selection():
+        for selected_item in tree.selection():
             item = self.tree.item(selected_item)
             record = item['values']
             # show a message
