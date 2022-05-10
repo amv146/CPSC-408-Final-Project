@@ -19,11 +19,11 @@ df = main_db.read_sql('SELECT * FROM Voice_Actors')
 # print(list(df.columns))
 # for row_index in range(0, len(df)):
 #   print(list(df.iloc[row_index]))
-df = main_db.read_sql('SELECT * FROM Voice_Actors')
+# df = main_db.run_all_procedure()
 app = App()
 app.table(df)
-print(get_project_root())
-app.tree.change_table(df)
+
+# app.tree.change_table(df)
 app.mainloop()
 
 

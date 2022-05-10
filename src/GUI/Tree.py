@@ -18,6 +18,8 @@ class Tree(Treeview):
     
     self.set_rows(dataframe)
     
+    print(len(self.get_children()))
+    
 
   def make_headings(self):
     pattern = r'([^_]+)+'
