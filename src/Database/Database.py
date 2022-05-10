@@ -1,3 +1,4 @@
+from typing import final
 from mysql import connector
 from sqlite3 import Cursor
 import pandas as pd
@@ -18,9 +19,13 @@ class Database:
     return pd.read_sql(sql, self.database)
   
   def refresh_cursor(self):
-    self.cursor.close()
-    self.database.reconnect()
-    self.cursor = self.database.cursor(buffered=True)
+    try:
+      self.cursor.close()
+    except:
+      pass
+    finally:
+      self.database.reconnect()
+      self.cursor = self.database.cursor(buffered=True)
     
   def try_connect(self, host: str, user: str, password: str, port: str, schema: str = "") -> CMySQLConnection | None:
     if schema == "":
