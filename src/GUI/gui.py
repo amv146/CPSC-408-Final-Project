@@ -1,25 +1,28 @@
 import tkinter as tk
 from tkinter import ttk, StringVar, OptionMenu
 from tkinter.messagebox import showinfo
+from Filters import FilterType
 
-from Tree import Tree
+from GUI.Tree import Tree
 import pandas as pd
+from GUI.Menu import Menu
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        # self.geometry("1000x500")
-        # self.title('Scooby-Doo Database')
-        # self.resizable(0, 0)
+        self.geometry("1000x500")
+        self.title('Scooby-Doo Database')
+        self.resizable(0, 0)
 
-        # # configure the grid
-        # self.columnconfigure(0, weight=1)
-        # self.columnconfigure(1, weight=3)
-        # self.columnconfigure(2, weight=1)
+        # configure the grid
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=3)
+        self.columnconfigure(2, weight=1)
 
-        self.filters()
-        self.table(pd.DataFrame())
+        # self.filters()
+        # self.table(pd.DataFrame())
+        self.options()
 
     
     def filters(self):
@@ -31,9 +34,8 @@ class App(tk.Tk):
         
     
 
-    # def options(self):
-
-        # o.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
+    def options(self):
+        menu = Menu(self, FilterType.ACTOR_NAME)
 
         
         
