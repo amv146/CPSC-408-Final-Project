@@ -14,7 +14,8 @@ import warnings
 from pandastable import Table
 warnings.filterwarnings('ignore')
 main_db: ScoobyDooDatabase = ScoobyDooDatabase()
-main_db.run_sql_file()
+main_db.run_sql_file('database_setup.sql')
+main_db.run_sql_file('procedures.sql')
 
 
 df = main_db.read_sql('SELECT * FROM Voice_Actors')

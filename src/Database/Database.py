@@ -1,6 +1,6 @@
 from typing import final
 from mysql import connector
-from sqlite3 import Cursor
+from mysql.connector.cursor import MySQLCursor as Cursor
 import pandas as pd
 from pandas import DataFrame
 from mysql.connector import CMySQLConnection
@@ -13,7 +13,7 @@ class Database:
     self.connect('localhost', '3306')
     
   def get_cursor(self) -> Cursor:
-    return self.database.cursor(buffered=True) 
+    return self.database.cursor(buffered=False) 
     
   def read_sql(self, sql: str) -> DataFrame:
     return pd.read_sql(sql, self.database)
@@ -25,7 +25,7 @@ class Database:
       pass
     finally:
       self.database.reconnect()
-      self.cursor = self.database.cursor(buffered=True)
+      self.cursor: Cursor = self.database.cursor(buffered=False)
     
   def try_connect(self, host: str, user: str, password: str, port: str, schema: str = "") -> CMySQLConnection | None:
     if schema == "":
@@ -60,7 +60,7 @@ class Database:
       password = input("Please input your MySQL password to connect\n")
       db = self.try_connect(host, 'root', password, port)
     self.database = db
-    self.cursor = self.database.cursor(buffered=True)
+    self.cursor: Cursor = self.database.cursor(buffered=False)
     self.store_password(str(password))
     
     self.try_create_schema(self.cursor)

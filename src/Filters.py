@@ -93,7 +93,7 @@ class FilterHandler:
   def get_options(self, filter_type: FilterType) -> list[str]:
     return self.filter_dict[filter_type].options
   
-  def get_applied_value(self, filter_type: FilterType) -> :
+  def get_applied_value(self, filter_type: FilterType) -> str: 
     return self.filter_dict[filter_type].applied_value
 
 FILT_SERIES_NAME =  Filter(type=FilterType.SERIES_NAME, table=Table.EPISODE_DETAILS,
