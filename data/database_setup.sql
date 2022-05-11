@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.28, for macos12.2 (x86_64)
 --
--- Host: 127.0.0.1    Database: FinalProject
+-- Host: 127.0.0.1    Database: ScoobyDoo
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -219,4 +219,4 @@ INSERT INTO `Voice_Actors` VALUES (1,'Fred','Frank Welker'),(2,'Daphne','Stefani
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-08 13:34:45
+-- Dump completed on 2022-05-10 17:05:50

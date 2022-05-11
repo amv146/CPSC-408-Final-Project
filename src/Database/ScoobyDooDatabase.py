@@ -1,20 +1,23 @@
 import mysql
 from mysql import connector
-from sqlite3 import Cursor
+from mysql.connector.cursor import MySQLCursor as Cursor
 from os import system
 from pandas import DataFrame
 import pandas as pd
 from Database.Database import Database
 from Utils import *
+import subprocess
 
 
 class ScoobyDooDatabase (Database):
   def __init__(self):
       super().__init__('ScoobyDoo')
   
-  def run_sql_file(self): 
-    command = """mysql -u %s -p"%s" --host %s --port %s %s < %s""" %('root', self.get_password(), 'localhost', '3061', 'ScoobyDoo', get_project_root().__str__() + '/data/database_setup.sql')
+  def run_sql_file(self, file: str): 
+    command = """mysql -u %s -p"%s" --host %s --port %s %s < %s""" %('root', self.get_password(), 'localhost', '3061', 'ScoobyDoo', get_project_root().__str__() + '/data/' + file)
     system(command)
+  
+
     
   def read_sql(self, sql: str) -> DataFrame:
     self.refresh_cursor()

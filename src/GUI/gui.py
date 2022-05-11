@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, StringVar, OptionMenu
 from tkinter.messagebox import showinfo
 
 from Tree import Tree
@@ -9,14 +9,14 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("1000x500")
-        self.title('Scooby-Doo Database')
-        self.resizable(0, 0)
+        # self.geometry("1000x500")
+        # self.title('Scooby-Doo Database')
+        # self.resizable(0, 0)
 
-        # configure the grid
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=3)
-        self.columnconfigure(2, weight=1)
+        # # configure the grid
+        # self.columnconfigure(0, weight=1)
+        # self.columnconfigure(1, weight=3)
+        # self.columnconfigure(2, weight=1)
 
         self.filters()
         self.table(pd.DataFrame())
@@ -31,6 +31,12 @@ class App(tk.Tk):
         
     
 
+    # def options(self):
+
+        # o.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
+
+        
+        
     def table(self, df):
 
         self.tree = Tree(self, df)
