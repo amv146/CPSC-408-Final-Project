@@ -7,8 +7,8 @@ from pandas import DataFrame
 import re
 
 class Tree(Treeview):
-  def __init__(self, app, dataframe: DataFrame) -> None:
-    self.columns: list[str] = list(dataframe.columns)
+  def __init__(self, app, dataframe: DataFrame, columns: list[str]) -> None:
+    self.columns: list[str] = columns
     self.dataframe = dataframe
 
     super().__init__(app, columns=self.columns, show='headings')
