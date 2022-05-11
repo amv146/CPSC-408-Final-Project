@@ -1,7 +1,7 @@
 
 from os import wait
 from time import sleep
-from Filters import *
+from GUI.Filters import *
 from GUI.gui import App
 from Database.ScoobyDooDatabase import ScoobyDooDatabase
 from mysql import connector

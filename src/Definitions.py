@@ -1,2 +1,2 @@
-from Filters import Filter, FilterType, Table
+from GUI.Filters import Filter, FilterType, Table
 
