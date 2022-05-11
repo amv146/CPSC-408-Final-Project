@@ -11,7 +11,6 @@ from sqlite3 import Cursor
 import tkinter as tk
 from Utils import *
 import warnings
-from pandastable import Table
 warnings.filterwarnings('ignore')
 main_db: ScoobyDooDatabase = ScoobyDooDatabase()
 main_db.run_sql_file()

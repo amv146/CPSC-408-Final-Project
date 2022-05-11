@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
 
-from GUI.Tree import Tree
+from Tree import Tree
+import pandas as pd
 
 class App(tk.Tk):
     def __init__(self):
@@ -18,7 +19,7 @@ class App(tk.Tk):
         self.columnconfigure(2, weight=1)
 
         self.filters()
-        self.table()
+        self.table(pd.DataFrame())
 
     
     def filters(self):
@@ -27,6 +28,7 @@ class App(tk.Tk):
 
         series_label = ttk.Label(self, text="Series Name:")
         series_label.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
+        
     
 
     def table(self, df):
