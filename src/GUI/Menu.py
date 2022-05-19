@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import Misc, OptionMenu, StringVar
 from typing import Any, Callable
 
-from Filters import *
+from GUI.Filters import *
 
 class Menu(OptionMenu):
   def __init__(self, master: Misc | None, filter_type: FilterType):
@@ -10,6 +10,7 @@ class Menu(OptionMenu):
       super().__init__(master, self.options, '')
       self.filter_type = filter_type
       self.filter = filter_dict[self.filter_type]
+      self.reset_val = False
 
 
 

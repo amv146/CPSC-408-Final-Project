@@ -4,7 +4,6 @@ from sqlite3 import Cursor
 import pandas as pd
 from pandas import DataFrame
 from enum import Enum
-from Database.ScoobyDooDatabase import ScoobyDooDatabase
 from pandas.core.series import Series
 from tkinter import OptionMenu
 
@@ -43,7 +42,7 @@ class Filter:
     self.applied_value = applied_value
     self.disable_list = disable_list
     self.update_list = update_list
-    
+    self.all_options = []
     self.options = []
     
   def __repr__(self) -> str:
@@ -96,17 +95,17 @@ FILT_CULPRIT_NAME = Filter(type=FilterType.CULPRIT_NAME, table = Table.CULPRITS,
     
          ]
   )
-FILT_CULPRIT_GENDER = Filter(type=FilterType.SERIES_NAME, table = Table.CULPRITS, 
+FILT_CULPRIT_GENDER = Filter(type=FilterType.CULPRIT_GENDER, table = Table.CULPRITS, 
          disable_list=[
     
          ]
   )
-FILT_SETTING_TERRAIN = Filter(type=FilterType.SERIES_NAME, table = Table.SETTINGS,
+FILT_SETTING_TERRAIN = Filter(type=FilterType.SETTING_TERRAIN, table = Table.SETTINGS,
          disable_list=[
     
          ]
   )
-FILT_SETTING_PLACE = Filter(type=FilterType.SERIES_NAME, table = Table.SETTINGS,
+FILT_SETTING_PLACE = Filter(type=FilterType.SETTING_PLACE, table = Table.SETTINGS,
          disable_list=[
     
          ]

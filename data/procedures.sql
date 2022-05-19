@@ -1,4 +1,4 @@
-USE ScoobyDoo;
+USE scooby_doo;
 
 # PROCEDURES
 

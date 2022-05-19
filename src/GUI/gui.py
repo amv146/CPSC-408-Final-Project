@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, StringVar, OptionMenu
 from tkinter.messagebox import showinfo
-from Filters import FilterType
 
 from GUI.Tree import Tree
 import pandas as pd
@@ -12,114 +11,130 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("1000x700")
+        self.geometry("1430x700")
         self.title('Scooby-Doo Database')
         self.resizable(0, 0)
 
         # configure the grid
         self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=3)
-        self.columnconfigure(2, weight=3)
-        self.columnconfigure(3, weight=3)
-        self.columnconfigure(4, weight=3)
+        self.columnconfigure(1, weight=2)
+        self.columnconfigure(2, weight=2)
+        self.columnconfigure(3, weight=2)
+        self.columnconfigure(4, weight=2)
         self.columnconfigure(5, weight=1)
+        self.columnconfigure(6, weight=1) 
+        
+        ## set minimal size for row 9 and column 9
+        self.rowconfigure(0, minsize=30)
+        self.rowconfigure(16, minsize=30)
+
+        self.columnconfigure(0, minsize=20)
+        self.columnconfigure(6, minsize=20)
+        
 
         self.rowconfigure(2)
 
-        # self.filters()
+        self.filters()
         # self.table(pd.DataFrame())
-        self.options()
+        # self.options()
 
 
     def filters(self):
         filter = ttk.Label(self, text="Filters")
         filter.grid(column=1, row=0, sticky=tk.W, padx=5, pady=5)
+        
+        self.reset_button = ttk.Button(
+            self,
+            text='Reset Filters',
+            
+        )
+        self.reset_button.grid(column=3, row=14, sticky=tk.W, padx=5, pady=5)
 
         # ROW 1
 
-        episode = ttk.Label(self, text="Episode Filters")
-        episode.grid(column=1, row=0, sticky=tk.W, padx=5, pady=5)
+        # episode = ttk.Label(self, text="Episode Filters")
+        # episode.grid(column=1, row=0, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Series Name:")
         filter_label.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.SERIES_NAME)
-        menu.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
+        series_menu = Menu(self, FilterType.SERIES_NAME)
+        series_menu.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
 
         series_label = ttk.Label(self, text="Season:")
         series_label.grid(column=2, row=1, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.SEASON)
-        menu.grid(column=2, row=2, sticky=tk.W, padx=5, pady=5)
+        season_menu = Menu(self, FilterType.SEASON)
+        season_menu.grid(column=2, row=2, sticky=tk.W, padx=5, pady=5)
 
         # ROW 2
 
-        episode = ttk.Label(self, text="Monster Filters")
-        episode.grid(column=1, row=3, sticky=tk.W, padx=5, pady=5)
+        # episode = ttk.Label(self, text="Monster Filters")
+        # episode.grid(column=1, row=3, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Monster Name:")
         filter_label.grid(column=1, row=4, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.MONSTER_NAME)
-        menu.grid(column=1, row=5, sticky=tk.W, padx=5, pady=5)
+        monster_name_menu = Menu(self, FilterType.MONSTER_NAME)
+        monster_name_menu.grid(column=1, row=5, sticky=tk.W, padx=5, pady=5)
 
         series_label = ttk.Label(self, text="Monster Gender:")
         series_label.grid(column=2, row=4, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.MONSTER_GENDER)
-        menu.grid(column=2, row=5, sticky=tk.W, padx=5, pady=5)
+        monster_gender_menu = Menu(self, FilterType.MONSTER_GENDER)
+        monster_gender_menu.grid(column=2, row=5, sticky=tk.W, padx=5, pady=5)
 
         series_label = ttk.Label(self, text="Monster Species:")
         series_label.grid(column=3, row=4, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.MONSTER_SPECIES)
-        menu.grid(column=3, row=5, sticky=tk.W, padx=5, pady=5)
+        monster_species_menu = Menu(self, FilterType.MONSTER_SPECIES)
+        monster_species_menu.grid(column=3, row=5, sticky=tk.W, padx=5, pady=5)
 
         # ROW 3
 
-        episode = ttk.Label(self, text="Culprit Filters")
-        episode.grid(column=1, row=6, sticky=tk.W, padx=5, pady=5)
+        # episode = ttk.Label(self, text="Culprit Filters")
+        # episode.grid(column=1, row=6, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Culprit Name:")
         filter_label.grid(column=1, row=7, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.CULPRIT_NAME)
-        menu.grid(column=1, row=8, sticky=tk.W, padx=5, pady=5)
+        culprit_name_menu = Menu(self, FilterType.CULPRIT_NAME)
+        culprit_name_menu.grid(column=1, row=8, sticky=tk.W, padx=5, pady=5)
 
         series_label = ttk.Label(self, text="Culprit Gender:")
         series_label.grid(column=2, row=7, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.CULPRIT_GENDER)
-        menu.grid(column=2, row=8, sticky=tk.W, padx=5, pady=5)
+        culprit_gender_menu = Menu(self, FilterType.CULPRIT_GENDER)
+        culprit_gender_menu.grid(column=2, row=8, sticky=tk.W, padx=5, pady=5)
 
         # ROW 4
 
-        episode = ttk.Label(self, text="Voice Actor Filters")
-        episode.grid(column=1, row=9, sticky=tk.W, padx=5, pady=5)
+        # episode = ttk.Label(self, text="Voice Actor Filters")
+        # episode.grid(column=1, row=9, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Actor Name:")
         filter_label.grid(column=1, row=10, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.ACTOR_NAME)
-        menu.grid(column=1, row=11, sticky=tk.W, padx=5, pady=5)
+        actor_menu = Menu(self, FilterType.ACTOR_NAME)
+        actor_menu.grid(column=1, row=11, sticky=tk.W, padx=5, pady=5)
 
         series_label = ttk.Label(self, text="Character Name:")
         series_label.grid(column=2, row=10, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.CULPRIT_NAME)
-        menu.grid(column=2, row=11, sticky=tk.W, padx=5, pady=5)
+        character_menu = Menu(self, FilterType.CHARACTER_NAME)
+        character_menu.grid(column=2, row=11, sticky=tk.W, padx=5, pady=5)
 
         # ROW 4
 
-        episode = ttk.Label(self, text="Setting Filters")
-        episode.grid(column=1, row=12, sticky=tk.W, padx=5, pady=5)
+        # episode = ttk.Label(self, text="Setting Filters")
+        # episode.grid(column=1, row=12, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Terrain:")
         filter_label.grid(column=1, row=13, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.SETTING_TERRAIN)
-        menu.grid(column=1, row=14, sticky=tk.W, padx=5, pady=5)
+        setting_terrain_menu = Menu(self, FilterType.SETTING_TERRAIN)
+        setting_terrain_menu.grid(column=1, row=14, sticky=tk.W, padx=5, pady=5)
 
         series_label = ttk.Label(self, text="Place:")
         series_label.grid(column=2, row=13, sticky=tk.W, padx=5, pady=5)
-        menu = Menu(self, FilterType.SETTING_PLACE)
-        menu.grid(column=2, row=14, sticky=tk.W, padx=5, pady=5)
+        setting_place_menu = Menu(self, FilterType.SETTING_PLACE)
+        setting_place_menu.grid(column=2, row=14, sticky=tk.W, padx=5, pady=5)
 
         # series_label = ttk.Label(self, text="Run Time:")
         # series_label.grid(column=3, row=1, sticky=tk.W, padx=5, pady=5)
         # menu = Menu(self, FilterType.)
         # menu.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
-
+        self.menus = [series_menu, season_menu, monster_name_menu, monster_gender_menu, monster_species_menu, culprit_name_menu, culprit_gender_menu, actor_menu, character_menu, setting_place_menu, setting_terrain_menu]
 
 
     # def options(self):
@@ -127,13 +142,13 @@ class App(tk.Tk):
 
 
 
-    def table(self, df):
+    def table(self, df, cols):
 
-        self.tree = Tree(self, df)
-        self.tree.grid(row=15, column=1, columnspan=4, sticky=tk.NSEW)
-        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
-        self.tree.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=15, column=5, sticky='ns')
+        self.tree = Tree(self, df, cols)
+        self.tree.grid(row=15, column=1, columnspan=5, sticky=tk.NSEW)
+        # scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
+        # self.tree.configure(yscroll=scrollbar.set)
+        # scrollbar.grid(row=15, column=5, sticky='ns')
 
 
         return self.tree

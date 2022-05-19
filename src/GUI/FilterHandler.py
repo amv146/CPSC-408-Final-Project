@@ -1,5 +1,6 @@
-from Filters import *
+from GUI.Filters import *
 from GUI.Menu import Menu
+from Database.ScoobyDooDatabase import ScoobyDooDatabase
  
 class FilterHandler:
   def __init__(self, database: ScoobyDooDatabase):
@@ -9,17 +10,12 @@ class FilterHandler:
     self.filters = list(filter_dict.values())
     self.__update_filters__()
     
-      
-  def __on_select__(self, menu: Menu):
-    self.change_filter_value( menu.filter_type, menu.options.get())
-    print(menu.filter_type)
-    for menu2 in self.menus:
-  
-      if (menu.options.get() == ' ' or menu.options.get() == '') or menu2 != menu:
-        menu2.add_options()
+  def reset_filter_values(self):
+    for filter in self.filters:
+      filter.applied_value = ''
+      filter.options = filter.all_options
 
   def change_filter_value(self, filter_type: FilterType, value: str):
-    print(value)
     self.filter_dict[filter_type].applied_value = value
     self.__update_filters__()
     # print(self.filter_dict[FilterType.SEASON])
@@ -59,6 +55,8 @@ class FilterHandler:
   def __update_filter__(self, df: DataFrame, filter: Filter):
     filter_name = str(filter.type)
     filter.options = list(df[filter_name].drop_duplicates().dropna())
+    if filter.all_options == []:
+      filter.all_options = list(df[filter_name].drop_duplicates().dropna())
     
   def get_options(self, filter_type: FilterType) -> list[str]:
     return self.filter_dict[filter_type].options

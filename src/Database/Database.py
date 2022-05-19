@@ -53,18 +53,26 @@ class Database:
     
   def connect(self, host: str, port: str):
     password = self.get_password()
-    db: CMySQLConnection | None = None
-    if (password != None):
-      db = self.try_connect(host, 'root', password, port)
-    while db == None:
-      password = input("Please input your MySQL password to connect\n")
-      db = self.try_connect(host, 'root', password, port)
+    db: CMySQLConnection
+    # if (password != None):
+    #   db = self.try_connect(host, 'root', password, port)
+    # while db == None:
+    #   password = input("Please input your MySQL password to connect\n")
+    #   db = self.try_connect(host, 'root', password, port)
+    
+
+    db = connector.connect(host='chapman-univ.mysql.database.azure.com', 
+      user='adminroot',
+      password='Chapman408!', 
+      database='scooby_doo',
+      client_flags= [connector.ClientFlag.SSL]
+    )
     self.database = db
     self.cursor: Cursor = self.database.cursor(buffered=False)
-    self.store_password(str(password))
+    # self.store_password(str(password))
     
-    self.try_create_schema(self.cursor)
-    db = self.try_connect(host, 'root', str(password), '3306', self.database_name)
+    # self.try_create_schema(self.cursor)
+    # db = self.try_connect(host, 'root', str(password), '3306', self.database_name)
     if db != None:
       self.database = db
     

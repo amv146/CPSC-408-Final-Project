@@ -16,9 +16,8 @@ class Tree(Treeview):
     self.make_headings()
     self.set_headings()
     
-    self.set_rows(dataframe)
+    self.change_table(self.dataframe)
     
-    print(len(self.get_children()))
     
 
   def make_headings(self):
@@ -36,6 +35,7 @@ class Tree(Treeview):
     self.headings = headings
     
   def change_table(self, df: DataFrame):
+    df = df[self.columns].drop_duplicates()
     for child in self.get_children():
       self.delete(child)
     self.set_rows(df)

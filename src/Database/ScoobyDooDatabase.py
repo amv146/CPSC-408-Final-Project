@@ -14,7 +14,7 @@ class ScoobyDooDatabase (Database):
       super().__init__('ScoobyDoo')
   
   def run_sql_file(self, file: str): 
-    command = """mysql -u %s -p"%s" --host %s --port %s %s < %s""" %('root', self.get_password(), 'localhost', '3061', 'ScoobyDoo', get_project_root().__str__() + '/data/' + file)
+    command = """mysql -u %s -p"%s" --host %s %s < %s""" %('adminroot', 'Chapman408!', 'chapman-univ.mysql.database.azure.com', 'scooby_doo', get_project_root().__str__() + '/data/' + file)
     system(command)
   
 
