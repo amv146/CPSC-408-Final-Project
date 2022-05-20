@@ -22,8 +22,14 @@ main_db: ScoobyDooDatabase = ScoobyDooDatabase()
 # main_db.run_sql_file('database_setup.sql')
 # main_db.run_sql_file('procedures.sql')
 
-main_db.create_culprit('test culprit 7', 'male')
-print(main_db.query_culprits('test culprit 7', 'male'))
+main_db.create_culprit('test culprit 9', 'male')
+main_db.create_episode('test series 9', 9, 'test 9', 'test date 9', 9, 'FALSE', 'test motive 9')
+
+print(main_db.query_episodes(series_name='test series 9', season=9, title='test 9'))
+
+main_db.add_episode_culprit(1, main_db.query_culprits('test culprit 9', 'male')[0])
+main_db.database.commit()
+print(main_db.query_episodes(series_name='test series 9', season=9, title='test 9'))
 
 df = main_db.read_sql('SELECT * FROM Voice_Actors')
 # print(list(df.columns))

@@ -25,7 +25,7 @@ class Database:
       pass
     finally:
       self.database.reconnect()
-      self.cursor: Cursor = self.database.cursor(buffered=False)
+      self.cursor: Cursor = self.database.cursor(buffered=True)
     
   def try_connect(self, host: str, user: str, password: str, port: str, schema: str = "") -> CMySQLConnection | None:
     if schema == "":

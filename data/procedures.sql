@@ -4,9 +4,9 @@ USE scooby_doo;
 
 -- CULPRITS --
 
-DROP PROCEDURE IF EXISTS Query_Culprits;
 
 DELIMITER ;;
+DROP PROCEDURE IF EXISTS Query_Culprits ;;
 CREATE PROCEDURE Query_Culprits(
         IN cn VARCHAR(60),
         IN cg VARCHAR(20)
@@ -18,14 +18,12 @@ CREATE PROCEDURE Query_Culprits(
         AND (cn IS NULL OR cn = culprit_name)
         AND (cg IS NULL OR cg = culprit_gender);
 END;;
-DELIMITER ;
-
 
 -- MONSTERS --
 
-DROP PROCEDURE IF EXISTS Query_Monsters;
 
 DELIMITER ;;
+DROP PROCEDURE IF EXISTS Query_Monsters ;;
 CREATE PROCEDURE Query_Monsters(
         IN mn VARCHAR(60),
         IN mg VARCHAR(20),
@@ -43,13 +41,12 @@ CREATE PROCEDURE Query_Monsters(
         AND (ms IS NULL OR ms = monster_species)
         AND (mst IS NULL OR mst = monster_subtype);
 END;;
-DELIMITER ;
 
 -- ACTORS --
 
-DROP PROCEDURE IF EXISTS Query_Actors;
 
 DELIMITER ;;
+DROP PROCEDURE IF EXISTS Query_Actors ;;
 CREATE PROCEDURE Query_Actors(
         IN an VARCHAR(60),
         IN cn VARCHAR(30)
@@ -61,13 +58,12 @@ CREATE PROCEDURE Query_Actors(
         AND (an IS NULL OR an = actor_name)
         AND (cn IS NULL OR cn = character_name);
 END;;
-DELIMITER ;
 
 -- SETTINGS --
 
-DROP PROCEDURE IF EXISTS Query_Settings;
 
 DELIMITER ;;
+DROP PROCEDURE IF EXISTS Query_Settings ;;
 CREATE PROCEDURE Query_Settings(
         IN st VARCHAR(60),
         IN sp VARCHAR(20)
@@ -79,18 +75,18 @@ CREATE PROCEDURE Query_Settings(
         AND (st IS NULL OR st = setting_terrain)
         AND (sp IS NULL OR sp = setting_place);
 END;;
-DELIMITER ;
 
 -- EPISODE --
 
 DROP PROCEDURE IF EXISTS Query_Episodes;
 
 DELIMITER ;;
+DROP PROCEDURE IF EXISTS Query_Episodes ;;
 CREATE PROCEDURE Query_Episodes(
         IN sn VARCHAR(60),
         IN s INT,
         IN t VARCHAR(60),
-        IN da DATE,
+        IN da VARCHAR(30),
         IN rt INT,
         IN mr VARCHAR(5),
         IN m VARCHAR(30)
@@ -107,21 +103,20 @@ CREATE PROCEDURE Query_Episodes(
         AND (mr IS NULL OR mr = monster_real)
         AND (m IS NULL OR m = motive);
 END;;
-DELIMITER ;
 
 -- FULL CALL --
 
 USE scooby_doo;
 
 
-DROP PROCEDURE IF EXISTS Query_All;
 
 DELIMITER ;;
+DROP PROCEDURE IF EXISTS Query_All ;;
 CREATE PROCEDURE Query_All(
         IN SeriesName VARCHAR(60),
         IN Season_ INT,
         IN Title_ VARCHAR(60),
-        IN DateAired DATE,
+        IN DateAired VARCHAR(30),
         IN Runtime_ INT,
         IN MonsterReal VARCHAR(5),
         IN Motive_ VARCHAR(30),
@@ -197,7 +192,6 @@ BEGIN
     AND (MonsterReal IS NULL OR MonsterReal = monster_real)
     AND (Motive_ IS NULL OR Motive_ = motive);
 END;;
-DELIMITER ;
 
 
 CALL Query_All(NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
