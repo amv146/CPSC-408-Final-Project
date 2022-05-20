@@ -5,7 +5,7 @@ from typing import Any, Callable
 from GUI.Filters import *
 
 class Menu(OptionMenu):
-  def __init__(self, master: Misc | None, filter_type: FilterType):
+  def __init__(self, master, filter_type: FilterType):
       self.options = StringVar(master, '')
       super().__init__(master, self.options, '')
       self.filter_type = filter_type

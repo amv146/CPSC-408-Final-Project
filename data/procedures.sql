@@ -5,6 +5,8 @@ USE scooby_doo;
 -- CULPRITS --
 
 DROP PROCEDURE IF EXISTS Query_Culprits;
+
+DELIMITER ;;
 CREATE PROCEDURE Query_Culprits(
         IN cn VARCHAR(60),
         IN cg VARCHAR(20)
@@ -15,11 +17,15 @@ CREATE PROCEDURE Query_Culprits(
         WHERE 1 = 1
         AND (cn IS NULL OR cn = culprit_name)
         AND (cg IS NULL OR cg = culprit_gender);
+END;;
+DELIMITER ;
 
 
 -- MONSTERS --
 
 DROP PROCEDURE IF EXISTS Query_Monsters;
+
+DELIMITER ;;
 CREATE PROCEDURE Query_Monsters(
         IN mn VARCHAR(60),
         IN mg VARCHAR(20),
@@ -36,11 +42,14 @@ CREATE PROCEDURE Query_Monsters(
         AND (mt IS NULL OR mt = monster_type)
         AND (ms IS NULL OR ms = monster_species)
         AND (mst IS NULL OR mst = monster_subtype);
-
+END;;
+DELIMITER ;
 
 -- ACTORS --
 
 DROP PROCEDURE IF EXISTS Query_Actors;
+
+DELIMITER ;;
 CREATE PROCEDURE Query_Actors(
         IN an VARCHAR(60),
         IN cn VARCHAR(30)
@@ -51,11 +60,14 @@ CREATE PROCEDURE Query_Actors(
         WHERE 1 = 1
         AND (an IS NULL OR an = actor_name)
         AND (cn IS NULL OR cn = character_name);
-
+END;;
+DELIMITER ;
 
 -- SETTINGS --
 
 DROP PROCEDURE IF EXISTS Query_Settings;
+
+DELIMITER ;;
 CREATE PROCEDURE Query_Settings(
         IN st VARCHAR(60),
         IN sp VARCHAR(20)
@@ -66,11 +78,14 @@ CREATE PROCEDURE Query_Settings(
         WHERE 1 = 1
         AND (st IS NULL OR st = setting_terrain)
         AND (sp IS NULL OR sp = setting_place);
-
+END;;
+DELIMITER ;
 
 -- EPISODE --
 
 DROP PROCEDURE IF EXISTS Query_Episodes;
+
+DELIMITER ;;
 CREATE PROCEDURE Query_Episodes(
         IN sn VARCHAR(60),
         IN s INT,
@@ -91,18 +106,17 @@ CREATE PROCEDURE Query_Episodes(
         AND (rt IS NULL OR rt = run_time)
         AND (mr IS NULL OR mr = monster_real)
         AND (m IS NULL OR m = motive);
-
-
-
-
-
+END;;
+DELIMITER ;
 
 -- FULL CALL --
 
-USE ScoobyDoo;
+USE scooby_doo;
 
 
 DROP PROCEDURE IF EXISTS Query_All;
+
+DELIMITER ;;
 CREATE PROCEDURE Query_All(
         IN SeriesName VARCHAR(60),
         IN Season_ INT,
@@ -182,6 +196,8 @@ BEGIN
     AND (Title_ IS NULL OR Title_ = title)
     AND (MonsterReal IS NULL OR MonsterReal = monster_real)
     AND (Motive_ IS NULL OR Motive_ = motive);
+END;;
+DELIMITER ;
 
 
 CALL Query_All(NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,

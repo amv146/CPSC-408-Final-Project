@@ -22,6 +22,8 @@ main_db: ScoobyDooDatabase = ScoobyDooDatabase()
 # main_db.run_sql_file('database_setup.sql')
 # main_db.run_sql_file('procedures.sql')
 
+main_db.create_culprit('test culprit 7', 'male')
+print(main_db.query_culprits('test culprit 7', 'male'))
 
 df = main_db.read_sql('SELECT * FROM Voice_Actors')
 # print(list(df.columns))
