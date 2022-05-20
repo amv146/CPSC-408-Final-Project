@@ -6,7 +6,7 @@ from pandas import DataFrame
 import pandas as pd
 from Database.Database import Database
 from Utils import *
-import subprocess
+from GUI.Filters import Table
 
 
 class ScoobyDooDatabase (Database):
@@ -39,5 +39,40 @@ class ScoobyDooDatabase (Database):
                      null(actor_name), null(character_name), 
                      null(monster_name), null(monster_gender), null(monster_type), null(monster_species), null(monster_subtype), 
                      null(culprit_name), null(culprit_gender))
+    result = pd.read_sql(sql, self.database)
+    return result
+
+  def query_settings(self, setting_terrain: str = '', setting_place: str = ''):
+    self.refresh_cursor()
+    sql = f'''CALL Query_Settings('{setting_terrain}', '{setting_place}')'''
+    
+    result = pd.read_sql(sql, self.database)
+    return result
+  
+  def query_episodes(self, series_name: str = '', season: int = 0, title: str = '', date_aired: str = '', runtime: int = 0, monster_real: str = '', motive: str = ''):
+    self.refresh_cursor()
+    sql = f'''CALL Query_Episodes('{series_name}', {season}, '{title}', '{date_aired}', {runtime}, '{monster_real}', '{motive}')'''
+      
+    result = pd.read_sql(sql, self.database)
+    return result
+  
+  def query_actors(self, actor_name: str = '', character_name: str = ''):
+    self.refresh_cursor()
+    sql = f'''CALL Query_Actors('{actor_name}', '{character_name}')'''
+        
+    result = pd.read_sql(sql, self.database)
+    return result
+
+  def query_monsters(self, monster_name: str = '', monster_gender: str = '', monster_type: str = '', monster_species: str = '', monster_subtype: str = ''):
+    self.refresh_cursor()
+    sql = f'''CALL Query_Monsters('{monster_name}', '{monster_gender}', '{monster_type}', '{monster_species}', '{monster_subtype}')'''
+          
+    result = pd.read_sql(sql, self.database)
+    return result
+
+  def query_culprits(self, culprit_name: str = '', culprit_gender: str = ''):
+    self.refresh_cursor()
+    sql = f'''CALL Query_Culprits('{culprit_name}', '{culprit_gender}')'''
+          
     result = pd.read_sql(sql, self.database)
     return result
