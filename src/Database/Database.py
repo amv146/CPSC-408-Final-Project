@@ -13,10 +13,17 @@ class Database:
     self.connect('localhost', '3306')
     
   def get_cursor(self) -> Cursor:
-    return self.database.cursor(buffered=False) 
+    return self.database.cursor(buffered=True) 
     
   def read_sql(self, sql: str) -> DataFrame:
+    self.refresh_cursor()
     return pd.read_sql(sql, self.database)
+  
+  def commit(self, sql: str):
+    self.refresh_cursor()
+    self.cursor.execute(sql)
+    self.database.commit()
+    self.refresh_cursor()
   
   def refresh_cursor(self):
     try:

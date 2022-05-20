@@ -27,7 +27,7 @@ main_db.create_episode('test series 9', 9, 'test 9', 'test date 9', 9, 'FALSE', 
 
 print(main_db.query_episodes(series_name='test series 9', season=9, title='test 9'))
 
-main_db.add_episode_culprit(1, main_db.query_culprits('test culprit 9', 'male')[0])
+main_db.add_episode_culprit(1, main_db.query_culprits('test culprit 9', 'male'))
 main_db.database.commit()
 print(main_db.query_episodes(series_name='test series 9', season=9, title='test 9'))
 
