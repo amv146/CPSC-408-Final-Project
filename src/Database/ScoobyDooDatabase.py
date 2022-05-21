@@ -39,6 +39,7 @@ class ScoobyDooDatabase (Database):
   def query_episodes(self, episode: Episode):
     self.refresh_cursor()
     sql = f'''CALL Query_Episodes({null(episode.series_name)}, {null(episode.season)}, {null(episode.title)}, {null(episode.date_aired)}, {null(episode.runtime)}, {null(episode.monster_real)}, {null(episode.motive)})'''
+
     result = pd.read_sql(sql, self.database)
     return self.__get_id__(result)
   
@@ -68,7 +69,6 @@ class ScoobyDooDatabase (Database):
     sql = f'''CALL Query_Culprits({null(culprit.culprit_name)}, {null(culprit.culprit_gender)})'''
           
     result = pd.read_sql(sql, self.database)
-
     return self.__get_id__(result)
   
   #
@@ -114,8 +114,7 @@ class ScoobyDooDatabase (Database):
   def create_setting(self, setting: Setting) -> int:
     result = self.query_settings(setting)
 
-    if len(result) == 0:
-      # sql = f'''CALL Create_Setting('{setting_terrain}', '{setting_place}')'''
+    if result == -1:
       sql = f'''INSERT INTO settings(setting_terrain, setting_place) 
                 VALUES ('{setting.setting_terrain}', '{setting.setting_place}')'''
                   
@@ -183,10 +182,9 @@ class ScoobyDooDatabase (Database):
 
   def add_episode_actor(self, episode_id: int = 0, actor_id: int = 0):
     self.refresh_cursor()
-    
-    sql = f'''UPDATE episode_actors
-              SET setting_id = {actor_id}
-              WHERE episode_id = {episode_id};
+
+    sql = f'''INSERT INTO episode_actors (episode_id, actor_id)
+              VALUES ({episode_id}, {actor_id});
     '''
     
     self.commit(sql)
@@ -211,6 +209,160 @@ class ScoobyDooDatabase (Database):
   #
   # END ADDS
   #
+
+  #
+  # BEGIN UPDATES
+  #
+
+  def update_episode(self, episode: Episode, episode_id: int = 0):
+    self.refresh_cursor()
+    
+    sql = f'''UPDATE episode_details
+              SET series_name = '{episode.series_name}',
+                  season = {episode.season},
+                  title = '{episode.title}',
+                  date_aired = '{episode.date_aired}',
+                  run_time = {episode.runtime},
+                  monster_real = '{episode.monster_real}',
+                  motive = '{episode.motive}'
+              WHERE episode_id = {episode_id};
+    '''
+    
+    self.commit(sql)
+  
+  def update_episode_setting(self, episode_id: int, setting_id: int):
+    self.refresh_cursor()
+    
+    sql = f'''UPDATE episode_details
+              SET setting_id = {setting_id}
+              WHERE episode_id = {episode_id};
+    '''
+    
+    self.commit(sql)
+
+  def update_setting(self, setting: Setting, setting_id: int = 0):
+    self.refresh_cursor()
+    
+    sql = f'''UPDATE settings
+              SET setting_terrain = '{setting.setting_terrain}',
+                  setting_place = '{setting.setting_place}'
+              WHERE setting_id = {setting_id};
+    '''
+    
+    self.commit(sql)
+
+  def update_actor(self, actor: VoiceActor, actor_id: int = 0):
+    self.refresh_cursor()
+    
+    sql = f'''UPDATE voice_actors
+              SET actor_name = '{actor.actor_name}',
+                  character_name = '{actor.character_name}'
+              WHERE actor_id = {actor_id};
+    '''
+    
+    self.commit(sql)
+
+  def update_monster(self, monster: Monster, monster_id: int = 0):
+    self.refresh_cursor()
+    
+    sql = f'''UPDATE monsters
+              SET monster_name = '{monster.monster_name}',
+                  monster_gender = '{monster.monster_gender}',
+                  monster_type = '{monster.monster_type}',
+                  monster_subtype = '{monster.monster_subtype}',
+                  monster_species = '{monster.monster_species}'
+              WHERE monster_id = {monster_id};
+    '''
+
+    self.commit(sql)
+
+  def update_culprit(self, culprit: Culprit, culprit_id: int = 0):
+    self.refresh_cursor()
+
+    print(culprit.culprit_name)
+    print(culprit.culprit_gender)
+    print(culprit_id)
+    
+    sql = f'''UPDATE culprits
+              SET culprit_name = '{culprit.culprit_name}',
+                  culprit_gender = '{culprit.culprit_gender}'
+              WHERE culprit_id = {culprit_id};
+    '''
+
+    self.commit(sql)
+
+  #
+  # END UPDATES
+  #
+
+  #
+  # BEGIN DELETES
+  #
+
+  def delete_episode(self, episode_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_details
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_setting(self, setting_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE settings
+              SET is_deleted = 1
+              WHERE setting_id = {setting_id};
+    '''
+
+    self.commit(sql)
+
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_details
+              SET setting_id = NULL
+              WHERE setting_id = {setting_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_actor(self, actor_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE voice_actors
+              SET is_deleted = 1
+              WHERE actor_id = {actor_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_monster(self, monster_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE monsters
+              SET is_deleted = 1
+              WHERE monster_id = {monster_id};
+    '''
+
+    self.commit(sql)
+  
+  def delete_culprit(self, culprit_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE culprits
+              SET is_deleted = 1
+              WHERE culprit_id = {culprit_id};
+    '''
+
+    self.commit(sql)
+
+
+  #
+  # END DELETES
+  #
+
     
   def __get_params__(self, locals: dict):
     return {key: null(value) for key, value in locals.items()}

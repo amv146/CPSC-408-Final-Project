@@ -1,8 +1,22 @@
 USE scooby_doo;
 
+ALTER TABLE Culprits
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Monsters
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Settings
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Voice_Actors
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Episode_Details
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
 SELECT *
-FROM episode_details
-WHERE episode_id = 501;
+FROM Episode_Details;
 
 SELECT *
 FROM settings;
@@ -12,7 +26,6 @@ FROM settings
 WHERE setting_place = 'United States'
     AND setting_terrain = 'Urban';
 
-# can be done without a place but there has to be terrain
 delimiter $$
 DROP PROCEDURE IF EXISTS Create_Setting $$
 CREATE PROCEDURE Create_Setting(
