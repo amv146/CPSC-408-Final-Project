@@ -16,16 +16,19 @@ ALTER TABLE Episode_Details
     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
 
 ALTER TABLE Episode_Actors
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+    ADD COLUMN is_deleted_episode_actors INT NOT NULL DEFAULT 0;
 
 ALTER TABLE Episode_Culprits
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+    ADD COLUMN is_deleted_episode_culprits INT NOT NULL DEFAULT 0;
 
 ALTER TABLE Episode_Monsters
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+    ADD COLUMN is_deleted_episode_monsters INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Episode_Monsters
+    DROP COLUMN is_deleted;
 
 SELECT *
-FROM Episode_Monsters;
+FROM Culprits;
 
 SELECT *
 FROM settings;

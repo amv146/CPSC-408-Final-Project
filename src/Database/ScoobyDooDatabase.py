@@ -370,7 +370,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_actors
-              SET is_deleted = 1
+              SET is_deleted_episode_actors = 1
               WHERE episode_id = {episode_id}
                 AND actor_id = {actor_id};
     '''
@@ -381,7 +381,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_monsters
-              SET is_deleted = 1
+              SET is_deleted_episode_monsters = 1
               WHERE episode_id = {episode_id}
                 AND monster_id = {monster_id};
     '''
@@ -421,7 +421,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_actors
-              SET is_deleted = 1
+              SET is_deleted_episode_actors = 1
               WHERE episode_id = {episode_id};
     '''
 
@@ -431,7 +431,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_actors
-              SET is_deleted = 1
+              SET is_deleted_episode_actors = 1
               WHERE actor_id = {actor_id};
     '''
 
@@ -441,7 +441,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_monsters
-              SET is_deleted = 1
+              SET is_deleted_episode_monsters = 1
               WHERE episode_id = {episode_id};
     '''
 
@@ -451,7 +451,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_monsters
-              SET is_deleted = 1
+              SET is_deleted_episode_monsters = 1
               WHERE monster_id = {monster_id};
     '''
 
@@ -461,7 +461,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_culprits
-              SET is_deleted = 1
+              SET is_deleted_episode_culprits = 1
               WHERE episode_id = {episode_id};
     '''
 
@@ -471,7 +471,7 @@ class ScoobyDooDatabase (Database):
     self.refresh_cursor()
 
     sql = f'''UPDATE episode_culprits
-              SET is_deleted = 1
+              SET is_deleted_episode_culprits = 1
               WHERE culprit_id = {culprit_id};
     '''
 
