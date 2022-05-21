@@ -1,6 +1,7 @@
-from GUI.Filters import *
-from GUI.Menu import Menu
-from Database.ScoobyDooDatabase import ScoobyDooDatabase
+from src.GUI.Filters import *
+from src.GUI.Menu import Menu
+from src.Database.ScoobyDooDatabase import ScoobyDooDatabase
+from src.Entities import *
  
 class FilterHandler:
   def __init__(self, database: ScoobyDooDatabase):
@@ -41,11 +42,11 @@ class FilterHandler:
     monster_species = self.__get_value__(self.filter_dict[FilterType.MONSTER_SPECIES].applied_value)
     culprit_name = self.__get_value__(self.filter_dict[FilterType.CULPRIT_NAME].applied_value)
     culprit_gender = self.__get_value__(self.filter_dict[FilterType.CULPRIT_GENDER].applied_value)
-    return self.database.run_all_procedure(series_name = series_name, season = season, title = '', date_aired = date_aired, runtime = 0, monster_real = '', motive = '', 
-                                    setting_terrain = setting_terrain, setting_place = setting_place, 
-                                    actor_name = actor_name, character_name = character_name, 
-                                    monster_name = monster_name, monster_gender = monster_gender, monster_type = '', monster_species = monster_species, monster_subtype = '', 
-                                    culprit_name = culprit_name, culprit_gender = culprit_gender)
+    return self.database.run_all_procedure(Episode(series_name = series_name, season = season, title = '', date_aired = date_aired, runtime = 0, monster_real = '', motive = ''), 
+                                    Setting(setting_terrain = setting_terrain, setting_place = setting_place), 
+                                    VoiceActor(actor_name = actor_name, character_name = character_name), 
+                                    Monster(monster_name = monster_name, monster_gender = monster_gender, monster_type = '', monster_species = monster_species, monster_subtype = ''), 
+                                    Culprit(culprit_name = culprit_name, culprit_gender = culprit_gender))
     
   def __get_value__(self, string):
     if string == ' ' or 0 or '':

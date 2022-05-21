@@ -2,10 +2,9 @@ import tkinter as tk
 from tkinter import ttk, StringVar, OptionMenu
 from tkinter.messagebox import showinfo
 
-from GUI.Tree import Tree
-import pandas as pd
-from GUI.Menu import Menu
-from GUI.Filters import *
+from src.GUI.Tree import Tree
+from src.GUI.Menu import Menu
+from src.GUI.Filters import *
 
 class App(tk.Tk):
     def __init__(self):

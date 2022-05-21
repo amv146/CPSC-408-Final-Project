@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import Misc, OptionMenu, StringVar
 from typing import Any, Callable
 
-from GUI.Filters import *
+from src.GUI.Filters import *
 
 class Menu(OptionMenu):
   def __init__(self, master, filter_type: FilterType):
@@ -11,10 +11,6 @@ class Menu(OptionMenu):
       self.filter_type = filter_type
       self.filter = filter_dict[self.filter_type]
       self.reset_val = False
-
-
-
-
 
   def add_options(self):
     self.remove_all() # remove all options
