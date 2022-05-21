@@ -309,6 +309,10 @@ class ScoobyDooDatabase (Database):
 
     self.commit(sql)
 
+    self.delete_episode_actor(episode_id)
+    self.delete_episode_monster(episode_id)
+    self.delete_episode_culprit(episode_id)
+
   def delete_setting(self, setting_id: int = 0):
     self.refresh_cursor()
 
@@ -319,14 +323,7 @@ class ScoobyDooDatabase (Database):
 
     self.commit(sql)
 
-    self.refresh_cursor()
-
-    sql = f'''UPDATE episode_details
-              SET setting_id = NULL
-              WHERE setting_id = {setting_id};
-    '''
-
-    self.commit(sql)
+    self.delete_setting_episode(setting_id)
 
   def delete_actor(self, actor_id: int = 0):
     self.refresh_cursor()
@@ -338,6 +335,8 @@ class ScoobyDooDatabase (Database):
 
     self.commit(sql)
 
+    self.delete_actor_episode(actor_id)
+
   def delete_monster(self, monster_id: int = 0):
     self.refresh_cursor()
 
@@ -347,6 +346,8 @@ class ScoobyDooDatabase (Database):
     '''
 
     self.commit(sql)
+
+    self.delete_monster_episode(monster_id)
   
   def delete_culprit(self, culprit_id: int = 0):
     self.refresh_cursor()
@@ -358,6 +359,127 @@ class ScoobyDooDatabase (Database):
 
     self.commit(sql)
 
+    self.delete_culprit_episode(culprit_id)
+
+
+  # 
+  # BEGIN SINGLE DELETES
+  # 
+
+  def delete_single_episode_actor(self, episode_id: int, actor_id: int):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_actors
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id}
+                AND actor_id = {actor_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_single_episode_monster(self, episode_id: int, monster_id: int):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_monsters
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id}
+                AND monster_id = {monster_id};
+    '''
+
+    self.commit(sql)
+  
+  def delete_single_episode_culprit(self, episode_id: int, culprit_id: int):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_culprits
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id}
+                AND culprit_id = {culprit_id};
+    '''
+
+    self.commit(sql)
+
+  # 
+  # END SINGLE DELETES
+  # 
+
+  # 
+  # BEGIN DELETE LINKING TABLES
+  # 
+
+  def delete_setting_episode(self, setting_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_details
+              SET setting_id = NULL
+              WHERE setting_id = {setting_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_episode_actor(self, episode_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_actors
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_actor_episode(self, actor_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_actors
+              SET is_deleted = 1
+              WHERE actor_id = {actor_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_episode_monster(self, episode_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_monsters
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_monster_episode(self, monster_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_monsters
+              SET is_deleted = 1
+              WHERE monster_id = {monster_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_episode_culprit(self, episode_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_culprits
+              SET is_deleted = 1
+              WHERE episode_id = {episode_id};
+    '''
+
+    self.commit(sql)
+
+  def delete_culprit_episode(self, culprit_id: int = 0):
+    self.refresh_cursor()
+
+    sql = f'''UPDATE episode_culprits
+              SET is_deleted = 1
+              WHERE culprit_id = {culprit_id};
+    '''
+
+    self.commit(sql)
+
+  # 
+  # END DELETE LINKING TABLES
+  # 
 
   #
   # END DELETES

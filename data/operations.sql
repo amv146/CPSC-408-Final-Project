@@ -15,8 +15,17 @@ ALTER TABLE Voice_Actors
 ALTER TABLE Episode_Details
     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
 
+ALTER TABLE Episode_Actors
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Episode_Culprits
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
+ALTER TABLE Episode_Monsters
+    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+
 SELECT *
-FROM Episode_Details;
+FROM Episode_Monsters;
 
 SELECT *
 FROM settings;
