@@ -47,7 +47,10 @@ def on_select_main_tree(e, app: App, main_db: ScoobyDooDatabase):
   
   setting_id = episode_details['setting_id'].iloc[0]
   setting_sql = f'SELECT * FROM settings WHERE setting_id = {setting_id}'
-  setting_details = main_db.read_sql(setting_sql)
+  try:
+    setting_details = main_db.read_sql(setting_sql)
+  except:
+    setting_details = pd.DataFrame({'setting_place': '', 'setting_terrain': ''})
   
   episode_monster_sql = f'SELECT monster_id FROM episode_monsters WHERE episode_id = {episode_id}'
   monster_ids = list(main_db.read_sql(episode_monster_sql)['monster_id'])
