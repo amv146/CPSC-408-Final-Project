@@ -1,3 +1,4 @@
+from cgitb import reset
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
@@ -39,6 +40,9 @@ class Tree(Treeview):
       self.delete(child)
       
   def change_table(self, df: DataFrame, drop_duplicates = True):
+    if df.empty:
+      reset()
+      return
     if drop_duplicates:
       df = df[self.columns].drop_duplicates()
     else:

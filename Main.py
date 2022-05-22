@@ -26,7 +26,7 @@ main_cols = ['title', 'series_name', 'season', 'date_aired', 'run_time', 'settin
 
 
 
-def on_select(e, app: App, main_db: ScoobyDooDatabase):
+def on_select_main_tree(e, app: App, main_db: ScoobyDooDatabase):
   item = app.tree.item(app.tree.focus())
   app.change_entry_text(app.monster_type_entry, '')
   app.change_entry_text(app.monster_subtype_entry, '')
@@ -268,13 +268,34 @@ def __on_select__(menu: Menu):
     if (menu.options.get() == ' ' or menu.options.get() == '') or menu2 != menu:
       menu2.add_options()
     
+def on_select_monster_tree(e, app: App):
+  item = app.monster_tree.item(app.monster_tree.focus())
+  app.change_entry_text(app.monster_entry, item['values'][0])
+  app.change_entry_text(app.monster_gender_entry, item['values'][1])
+  app.change_entry_text(app.monster_type_entry, item['values'][2])
+  app.change_entry_text(app.monster_subtype_entry, item['values'][3])
+  app.change_entry_text(app.monster_species_entry, item['values'][4])
 
+def on_select_culprit_tree(e, app: App):
+  item = app.culprits_tree.item(app.culprits_tree.focus())
+  app.change_entry_text(app.culprit_name_entry, item['values'][0])
+  app.change_entry_text(app.culprit_gender_entry, item['values'][1])
+  
+def on_select_va_tree(e, app: App):
+  item = app.va_tree.item(app.va_tree.focus())
+  app.change_entry_text(app.character_name_entry, item['values'][0])
+  app.change_entry_text(app.actor_name_entry, item['values'][1])
+  
 app.table(df, main_cols)
 app.reset_button.bind("<ButtonRelease-1>", lambda e, app = app, main_db = main_db: reset(app))
 
         
         
-app.tree.bind("<ButtonRelease-1>", lambda e, app = app, db = main_db: on_select(e, app, db)) 
+app.tree.bind("<ButtonRelease-1>", lambda e, app = app, db = main_db: on_select_main_tree(e, app, db)) 
+app.monster_tree.bind("<ButtonRelease-1>", lambda e, app = app: on_select_monster_tree(e, app)) 
+app.culprits_tree.bind("<ButtonRelease-1>", lambda e, app = app: on_select_culprit_tree(e, app)) 
+app.va_tree.bind("<ButtonRelease-1>", lambda e, app = app: on_select_va_tree(e, app)) 
+
 app.delete_record_button.bind("<ButtonRelease-1>", lambda e, app = app, main_db = main_db: delete_record(e, app, main_db))
 app.add_record_button.bind("<ButtonRelease-1>", lambda e, app = app, db = main_db: add_record(e, app, db))
 app.clear_button.bind("<ButtonRelease-1>", lambda e, app = app: clear(e, app))
