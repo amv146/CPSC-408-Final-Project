@@ -39,9 +39,9 @@ class App(tk.Tk):
         self.columnconfigure(0, minsize=20)
         self.columnconfigure(7, minsize=20)
         
-        title = ttk.Label(self, text="SCOOBY-DOO", font=("Helvetica", 20))
+        title = ttk.Label(self, text="SCOOBY-DOO", font=("Helvetica", 18))
         title.grid(column=3, row=0, sticky=tk.E, padx=5, pady=5)
-        title = ttk.Label(self, text="DATABASE", font=("Helvetica", 20))
+        title = ttk.Label(self, text="DATABASE", font=("Helvetica", 18))
         title.grid(column=4, row=0, sticky=tk.W, padx=5, pady=5)
         
         # text = tk.Text(self, height=10)
@@ -284,6 +284,14 @@ class App(tk.Tk):
         self.monster_label = Label(self, text="MONSTER INFO: ")
         self.monster_label.grid(row=20, column=1)
         
+        # AGGREGET TOTAL MONSTERS
+        self.monster_total = tk.IntVar()
+        self.monster_total = 0
+        self.monster_total_label = Label(self, text="Total Monsters:")
+        self.monster_num_label = Label(self, text= self.monster_total)
+        self.monster_total_label.grid(row=20, column=6, sticky=tk.E)
+        self.monster_num_label.grid(row=20, column=7, sticky=tk.W)
+        
         self.monster_tree = Tree(self, columns=['monster_name', 'monster_gender', 'monster_type', 'monster_subtype', 'monster_species'], height=2)
         self.monster_tree.grid(row=21, column=1, columnspan=6, sticky=tk.NSEW)
         
@@ -337,6 +345,14 @@ class App(tk.Tk):
         self.culprit_label = Label(self, text="CULPRIT INFO: ")
         self.culprit_label.grid(row=25, column=1)
         
+        # AGGREGET TOTAL CULPRITS
+        self.culprits_total = tk.IntVar()
+        self.culprits_total = 0
+        self.culprits_total_label = Label(self, text="Total Culprits:")
+        self.culprits_num_label = Label(self, text= self.culprits_total)
+        self.culprits_total_label.grid(row=25, column=6, sticky=tk.E)
+        self.culprits_num_label.grid(row=25, column=7, sticky=tk.W)
+        
         self.culprits_tree = Tree(self, columns=['culprit_name', 'culprit_gender'], height=2)
         self.culprits_tree.grid(row=26, column=1, columnspan=6, sticky=tk.NSEW)
         
@@ -364,6 +380,14 @@ class App(tk.Tk):
         # VOICE ACTOR INFO
         self.episode_label = Label(self, text="VOICE ACTOR INFO: ")
         self.episode_label.grid(row=28, column=1)
+        
+        # AGGREGET TOTAL CULPRITS
+        self.va_total = tk.IntVar()
+        self.va_total = 0
+        self.va_total_label = Label(self, text="Total Voice Actors:")
+        self.va_num_label = Label(self, text= self.va_total)
+        self.va_total_label.grid(row=28, column=6, sticky=tk.E)
+        self.va_num_label.grid(row=28, column=7, sticky=tk.W)
         
         self.va_tree = Tree(self, columns=['character_name', 'actor_name'], height=2)
         self.va_tree.grid(row=29, column=1, columnspan=6, sticky=tk.NSEW)
