@@ -38,8 +38,11 @@ class Tree(Treeview):
     for child in self.get_children():
       self.delete(child)
       
-  def change_table(self, df: DataFrame):
-    df = df[self.columns].drop_duplicates()
+  def change_table(self, df: DataFrame, drop_duplicates = True):
+    if drop_duplicates:
+      df = df[self.columns].drop_duplicates()
+    else:
+      df = df[self.columns]
     for child in self.get_children():
       self.delete(child)
     self.set_rows(df)
