@@ -11,7 +11,7 @@ class Tree(Treeview):
     self.columns: list[str] = columns
     self.dataframe = dataframe
 
-    super().__init__(app, columns=self.columns, show='headings')
+    super().__init__(app, columns=self.columns, show='headings', height=6)
     
     self.make_headings()
     self.set_headings()
