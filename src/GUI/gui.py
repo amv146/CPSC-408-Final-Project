@@ -114,13 +114,18 @@ class App(tk.Tk):
             self,
             text='Reset Filters'   
         )
+        self.export_button = ttk.Button(
+            self,
+            text='Export' 
+        )
+        self.export_button.grid(column=6, row=6,sticky=tk.E)
         
-        self.reset_button.grid(column=6, row=5, padx=5, pady=5)
+        self.reset_button.grid(column=5, row=5, sticky=tk.E)
 
 
     def filters(self):
         filter = ttk.Label(self, text="FILTERS")
-        filter.grid(column=1, row=1, padx=5, pady=5)
+        filter.grid(column=1, row=1)
 
         # ROW 1
 
@@ -128,14 +133,14 @@ class App(tk.Tk):
         # episode.grid(column=1, row=0, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Series Name:")
-        filter_label.grid(column=1, row=2, sticky=tk.E, padx=5, pady=5)
+        filter_label.grid(column=1, row=2, sticky=tk.E, pady=1)
         series_menu = Menu(self, FilterType.SERIES_NAME)
-        series_menu.grid(column=2, row=2, sticky=tk.W, padx=5, pady=5)
+        series_menu.grid(column=2, row=2, sticky=tk.W, pady=1)
 
         series_label = ttk.Label(self, text="Season:")
-        series_label.grid(column=3, row=2, sticky=tk.E, padx=5, pady=5)
+        series_label.grid(column=3, row=2, sticky=tk.E, pady=1)
         season_menu = Menu(self, FilterType.SEASON)
-        season_menu.grid(column=4, row=2, sticky=tk.W, padx=5, pady=5)
+        season_menu.grid(column=4, row=2, sticky=tk.W, pady=1)
 
         # ROW 2
 
@@ -143,19 +148,19 @@ class App(tk.Tk):
         # episode.grid(column=1, row=3, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Monster Name:")
-        filter_label.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
+        filter_label.grid(column=1, row=3, sticky=tk.E, pady=1)
         monster_name_menu = Menu(self, FilterType.MONSTER_NAME)
-        monster_name_menu.grid(column=2, row=3, sticky=tk.W, padx=5, pady=5)
+        monster_name_menu.grid(column=2, row=3, sticky=tk.W, pady=1)
 
         series_label = ttk.Label(self, text="Monster Gender:")
-        series_label.grid(column=3, row=3, sticky=tk.E, padx=5, pady=5)
+        series_label.grid(column=3, row=3, sticky=tk.E, pady=1)
         monster_gender_menu = Menu(self, FilterType.MONSTER_GENDER)
-        monster_gender_menu.grid(column=4, row=3, sticky=tk.W, padx=5, pady=5)
+        monster_gender_menu.grid(column=4, row=3, sticky=tk.W, pady=2)
 
         series_label = ttk.Label(self, text="Monster Species:")
-        series_label.grid(column=5, row=3, sticky=tk.E, padx=5, pady=5)
+        series_label.grid(column=5, row=3, sticky=tk.E, pady=1)
         monster_species_menu = Menu(self, FilterType.MONSTER_SPECIES)
-        monster_species_menu.grid(column=6, row=3, sticky=tk.W, padx=5, pady=5)
+        monster_species_menu.grid(column=6, row=3, sticky=tk.W, pady=1)
 
         # ROW 3
 
@@ -163,14 +168,14 @@ class App(tk.Tk):
         # episode.grid(column=1, row=6, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Culprit Name:")
-        filter_label.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
+        filter_label.grid(column=1, row=4, sticky=tk.E, pady=2)
         culprit_name_menu = Menu(self, FilterType.CULPRIT_NAME)
-        culprit_name_menu.grid(column=2, row=4, sticky=tk.W, padx=5, pady=5)
+        culprit_name_menu.grid(column=2, row=4, sticky=tk.W, pady=2)
 
         series_label = ttk.Label(self, text="Culprit Gender:")
-        series_label.grid(column=3, row=4, sticky=tk.E, padx=5, pady=5)
+        series_label.grid(column=3, row=4, sticky=tk.E, pady=2)
         culprit_gender_menu = Menu(self, FilterType.CULPRIT_GENDER)
-        culprit_gender_menu.grid(column=4, row=4, sticky=tk.W, padx=5, pady=5)
+        culprit_gender_menu.grid(column=4, row=4, sticky=tk.W, pady=2)
 
         # ROW 4
 
@@ -178,14 +183,14 @@ class App(tk.Tk):
         # episode.grid(column=1, row=9, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Actor Name:")
-        filter_label.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
+        filter_label.grid(column=1, row=5, sticky=tk.E, pady=2)
         actor_menu = Menu(self, FilterType.ACTOR_NAME)
-        actor_menu.grid(column=2, row=5, sticky=tk.W, padx=5, pady=5)
+        actor_menu.grid(column=2, row=5, sticky=tk.W, pady=2)
 
         series_label = ttk.Label(self, text="Character Name:")
-        series_label.grid(column=3, row=5, sticky=tk.E, padx=5, pady=5)
+        series_label.grid(column=3, row=5, sticky=tk.E, pady=2)
         character_menu = Menu(self, FilterType.CHARACTER_NAME)
-        character_menu.grid(column=4, row=5, sticky=tk.W, padx=5, pady=5)
+        character_menu.grid(column=4, row=5, sticky=tk.W, pady=2)
 
         # ROW 4
 
@@ -193,14 +198,14 @@ class App(tk.Tk):
         # episode.grid(column=1, row=12, sticky=tk.W, padx=5, pady=5)
 
         filter_label = ttk.Label(self, text="Terrain:")
-        filter_label.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
+        filter_label.grid(column=1, row=6, sticky=tk.E, pady=2)
         setting_terrain_menu = Menu(self, FilterType.SETTING_TERRAIN)
-        setting_terrain_menu.grid(column=2, row=6, sticky=tk.W, padx=5, pady=5)
+        setting_terrain_menu.grid(column=2, row=6, sticky=tk.W, pady=2)
 
         series_label = ttk.Label(self, text="Place:")
-        series_label.grid(column=3, row=6, sticky=tk.E, padx=5, pady=5)
+        series_label.grid(column=3, row=6, sticky=tk.E, pady=2)
         setting_place_menu = Menu(self, FilterType.SETTING_PLACE)
-        setting_place_menu.grid(column=4, row=6, sticky=tk.W, padx=5, pady=5)
+        setting_place_menu.grid(column=4, row=6, sticky=tk.W, pady=2)
 
         # series_label = ttk.Label(self, text="Run Time:")
         # series_label.grid(column=3, row=1, sticky=tk.W, padx=5, pady=5)
@@ -403,7 +408,7 @@ class App(tk.Tk):
         spacer_label1 = Label(self, text="")
         spacer_label2 = Label(self, text="")
         # spacer_label1.grid(column=2, row=33)
-        spacer_label2.grid(column=2,row=10)
+        # spacer_label2.grid(column=2,row=10)
         
         
         # BUTTONS
@@ -419,10 +424,6 @@ class App(tk.Tk):
             self,
             text='Update Record' 
         )
-        self.export_button = ttk.Button(
-            self,
-            text='Export' 
-        )
         self.clear_button = ttk.Button(
             self,
             text='Clear' 
@@ -433,7 +434,7 @@ class App(tk.Tk):
         self.add_record_button.grid(column=4, row=34, padx=5, pady=5)
         self.clear_button.grid(column=5, row=34, padx=5, pady=5)
         
-        self.export_button.grid(column=6, row=16, padx=5, pady=5)
+        
         
         
         
