@@ -216,7 +216,7 @@ class App(tk.Tk):
 
     def table(self, df, cols):
 
-        self.tree = Tree(self, df, cols)
+        self.tree = Tree(self, cols, dataframe= df)
         self.tree.grid(row=15, column=1, columnspan=6, sticky=tk.NSEW)
         # scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
         # self.tree.configure(yscroll=scrollbar.set)
@@ -279,7 +279,7 @@ class App(tk.Tk):
         self.monster_label = Label(self, text="MONSTER INFO: ")
         self.monster_label.grid(row=20, column=1)
         
-        self.monster_tree = ttk.Treeview(self, columns="", height=2)
+        self.monster_tree = Tree(self, columns=['monster_name', 'monster_gender', 'monster_type', 'monster_subtype', 'monster_species'], height=2)
         self.monster_tree.grid(row=21, column=1, columnspan=6, sticky=tk.NSEW)
         
         self.monster_name_label = Label(self, text="Monster Name: ")
@@ -295,7 +295,7 @@ class App(tk.Tk):
         self.monster_real_entry = Entry(self, textvariable= self.monster_real)
         self.monster_real_entry.grid(row=22, column=4, sticky=tk.W)
         
-        self.monster_gender_label = Label(self, text="Monester Gender: ")
+        self.monster_gender_label = Label(self, text="Monster Gender: ")
         self.monster_gender_label.grid(row=22, column=5, sticky=tk.E)
         # monster_gender_menu = Menu(self, FilterType.SERIES_NAME)
         # monster_gender_menu.grid(column=6, row=21, sticky=tk.W, padx=5, pady=5)
@@ -332,7 +332,7 @@ class App(tk.Tk):
         self.culprit_label = Label(self, text="CULPRIT INFO: ")
         self.culprit_label.grid(row=25, column=1)
         
-        self.culprits_tree = ttk.Treeview(self, columns="", height=2)
+        self.culprits_tree = Tree(self, columns=['culprit_name', 'culprit_gender'], height=2)
         self.culprits_tree.grid(row=26, column=1, columnspan=6, sticky=tk.NSEW)
         
         self.culprit_name_label = Label(self, text="Culprit Name: ")
@@ -360,7 +360,7 @@ class App(tk.Tk):
         self.episode_label = Label(self, text="VOICE ACTOR INFO: ")
         self.episode_label.grid(row=28, column=1)
         
-        self.va_tree = ttk.Treeview(self, columns="", height=2)
+        self.va_tree = Tree(self, columns=['character_name', 'actor_name'], height=2)
         self.va_tree.grid(row=29, column=1, columnspan=6, sticky=tk.NSEW)
         
         self.character_name_label = Label(self, text="Character Name: ")
@@ -459,6 +459,9 @@ class App(tk.Tk):
     def change_entry_text(self, entry: Entry, text: str):
         entry.delete(0, END)
         entry.insert(0, text)
+        
+    def entry_text(self, entry: Entry):
+        return entry.get()
         
 if __name__ == "__main__":
     app = App()

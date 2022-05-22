@@ -7,16 +7,16 @@ from pandas import DataFrame
 import re
 
 class Tree(Treeview):
-  def __init__(self, app, dataframe: DataFrame, columns: list[str]) -> None:
+  def __init__(self, app, columns: list[str], dataframe: DataFrame = pd.DataFrame(), height = 6) -> None:
     self.columns: list[str] = columns
     self.dataframe = dataframe
 
-    super().__init__(app, columns=self.columns, show='headings', height=6)
+    super().__init__(app, columns=self.columns, show='headings', height=height)
     
     self.make_headings()
     self.set_headings()
-    
-    self.change_table(self.dataframe)
+    if not dataframe.empty:
+      self.change_table(self.dataframe)
     
     
 

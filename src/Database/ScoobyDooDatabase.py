@@ -257,8 +257,24 @@ class ScoobyDooDatabase (Database):
   #
   # BEGIN UPDATES
   #
+  
+  def update_episode(self, episode: Episode, setting: Setting, actor: VoiceActor, monster: Monster, culprit: Culprit):
+    self.update_episode_details(episode, episode.episode_id)
+    
+    setting_id = self.create_setting(setting)
+    self.update_episode_setting(episode.episode_id, setting_id)
+    
+    monster_id = self.create_monster(monster)
+    self.add_episode_monster(episode.episode_id, monster_id)
+    
+    culprit_id = self.create_culprit(culprit)
+    self.add_episode_culprit(episode.episode_id, culprit_id)
+    
+    actor_id = self.create_actor(actor)
+    self.add_episode_actor(episode.episode_id, actor_id)
+    
 
-  def update_episode(self, episode: Episode, episode_id: int = 0):
+  def update_episode_details(self, episode: Episode, episode_id: int = 0):
     self.refresh_cursor()
     
     try:
