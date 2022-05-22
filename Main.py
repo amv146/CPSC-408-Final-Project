@@ -169,7 +169,8 @@ def clear(e, app: App):
   app.change_entry_text(app.setting_place_entry, '')
   app.change_entry_text(app.setting_terrain_entry, '')
   
-  app.change_entry_text(app.monster_type_entry, '')
+  app.change_entry_text(app.monster_entry, '')
+  app.change_entry_text(app.monster_gender_entry, '')
   app.change_entry_text(app.monster_subtype_entry, '')
   app.change_entry_text(app.monster_species_entry, '')
   app.change_entry_text(app.monster_type_entry, '')
