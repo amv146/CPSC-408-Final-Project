@@ -1,3 +1,4 @@
+from src.Entities import *
 from src.GUI.Filters import *
 from src.GUI.Tree import Tree
 from src.GUI.gui import App
@@ -34,19 +35,33 @@ def on_select(item):
   setting_sql = f'SELECT * FROM settings WHERE setting_id = {setting_id}'
   setting_details = main_db.read_sql(setting_sql)
   
-  app.change_entry_text(app.season_entry, episode_details['season'].iloc[0])
-  app.change_entry_text(app.series_entry, episode_details['series_name'].iloc[0])
-  app.change_entry_text(app.run_entry, episode_details['run_time'].iloc[0])
-  app.change_entry_text(app.motive_entry, episode_details['motive'].iloc[0])
-  app.change_entry_text(app.monster_real_entry, episode_details['monster_real'].iloc[0])
-  app.change_entry_text(app.aired_entry, episode_details['date_aired'].iloc[0])
-  app.change_entry_text(app.title_entry, episode_details['title'].iloc[0])
+  episode = Episode(series_name= episode_details['series_name'].iloc[0], season= episode_details['season'].iloc[0], title = episode_details['title'].iloc[0], date_aired=episode_details['date_aired'].iloc[0], runtime= episode_details['run_time'].iloc[0], monster_real= episode_details['monster_real'].iloc[0], motive = episode_details['motive'].iloc[0])
+  setting = Setting(setting_place= setting_details['setting_terrain'].iloc[0], setting_terrain= setting_details['setting_place'].iloc[0])
   
-  app.change_entry_text(app.setting_place_entry, setting_details['setting_place'].iloc[0])
-  app.change_entry_text(app.setting_terrain_entry, setting_details['setting_terrain'].iloc[0])
+  app.change_entry_text(app.series_entry, episode.series_name)
+  app.change_entry_text(app.season_entry, str(episode.season))
+  app.change_entry_text(app.run_entry, str(episode.runtime))
+  app.change_entry_text(app.motive_entry, episode.motive)
+  app.change_entry_text(app.monster_real_entry, episode.monster_real)
+  app.change_entry_text(app.aired_entry, episode.date_aired)
+  app.change_entry_text(app.title_entry, episode.title)
+  
+  app.change_entry_text(app.setting_place_entry, setting.setting_place)
+  app.change_entry_text(app.setting_terrain_entry, setting.setting_terrain)
+
+def delete_record(e):
+  item = app.tree.item(app.tree.focus())
+  episode_name = (item['values'][0])
+  episode_sql = f'SELECT * FROM episode_details WHERE title = \'{episode_name}\''
+  episode_details = main_db.read_sql(episode_sql)
+  episode_id = episode_details['episode_id'].iloc[0]
+  
+  main_db.delete_episode(episode_id)
+  
+  
   
   # app.seriesName = df['series_name']
-  print(df)
+
 
 def reset():
   filter_handler.reset_filter_values()
@@ -78,7 +93,7 @@ app.reset_button.configure(command = reset)
         
         
 app.tree.bind("<ButtonRelease-1>", clicker) 
-
+app.delete_record_button.bind("<ButtonRelease-1>", delete_record)
         
         
 # Bindings

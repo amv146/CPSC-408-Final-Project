@@ -28,7 +28,6 @@ class ScoobyDooDatabase (Database):
                      null(actor.actor_name), null(actor.character_name), 
                      null(monster.monster_name), null(monster.monster_gender), null(monster.monster_type), null(monster.monster_species), null(monster.monster_subtype), 
                      null(culprit.culprit_name), null(culprit.culprit_gender))
-    print(sql)
     result = pd.read_sql(sql, self.database)
     return result
 
@@ -110,7 +109,7 @@ class ScoobyDooDatabase (Database):
 
         result = self.query_episodes(episode)
       
-      except mysql.connector.Error as error:
+      except connector.Error as error:
         print("failed create: {}".format(error))
         self.rollback()
 
@@ -128,7 +127,7 @@ class ScoobyDooDatabase (Database):
         
         result = self.query_settings(setting)
       
-      except mysql.connector.Error as error:
+      except connector.Error as error:
         print("failed create: {}".format(error))
         self.rollback()
 
@@ -145,7 +144,7 @@ class ScoobyDooDatabase (Database):
 
         result = self.query_actors(actor)
 
-      except mysql.connector.Error as error:
+      except connector.Error as error:
         print("failed create: {}".format(error))
         self.rollback()
 
@@ -162,7 +161,7 @@ class ScoobyDooDatabase (Database):
 
         result = self.query_monsters(monster)
       
-      except mysql.connector.Error as error:
+      except connector.Error as error:
         print("failed create: {}".format(error))
         self.rollback()
 
@@ -180,7 +179,7 @@ class ScoobyDooDatabase (Database):
       
         result = self.query_culprits(culprit)
       
-      except mysql.connector.Error as error:
+      except connector.Error as error:
         print("failed create: {}".format(error))
         self.rollback()
 
@@ -207,7 +206,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed add: {}".format(error))
         self.rollback()
 
@@ -221,7 +220,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed add: {}".format(error))
         self.rollback()
 
@@ -233,7 +232,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed add: {}".format(error))
         self.rollback()
 
@@ -247,7 +246,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed add: {}".format(error))
         self.rollback()
     
@@ -276,7 +275,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed update: {}".format(error))
         self.rollback()
   
@@ -291,7 +290,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed update: {}".format(error))
         self.rollback()
 
@@ -307,7 +306,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed update: {}".format(error))
         self.rollback()
 
@@ -323,7 +322,7 @@ class ScoobyDooDatabase (Database):
       
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed update: {}".format(error))
         self.rollback()
 
@@ -342,7 +341,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed update: {}".format(error))
         self.rollback()
 
@@ -358,7 +357,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed update: {}".format(error))
         self.rollback()
 
@@ -381,7 +380,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -399,7 +398,7 @@ class ScoobyDooDatabase (Database):
       '''
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -416,7 +415,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -433,7 +432,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -450,7 +449,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -473,7 +472,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -489,7 +488,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
   
@@ -505,7 +504,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -528,7 +527,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -543,7 +542,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -558,7 +557,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
 
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -573,7 +572,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -588,7 +587,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -603,7 +602,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
@@ -618,7 +617,7 @@ class ScoobyDooDatabase (Database):
 
       self.commit(sql)
     
-    except mysql.connector.Error as error:
+    except connector.Error as error:
         print("failed delete: {}".format(error))
         self.rollback()
 
