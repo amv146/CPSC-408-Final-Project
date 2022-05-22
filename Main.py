@@ -51,6 +51,9 @@ def on_select_main_tree(e, app: App, main_db: ScoobyDooDatabase):
   episode_monster_sql = f'SELECT monster_id FROM episode_monsters WHERE episode_id = {episode_id}'
   monster_ids = list(main_db.read_sql(episode_monster_sql)['monster_id'])
   monsters: DataFrame = pd.DataFrame()
+  app.monster_tree.reset()
+  app.va_tree.reset()
+  app.culprits_tree.reset()
   for monster_id in monster_ids:
     monster_sql = f'SELECT * FROM monsters WHERE monster_id = {monster_id}'
     monster = main_db.read_sql(monster_sql)
@@ -115,9 +118,24 @@ def add_record(e, app: App, main_db: ScoobyDooDatabase):
   
   actor = VoiceActor(character_name= app.character_name_entry.get(), actor_name= app.actor_name_entry.get())
   monster = Monster(monster_name = app.monster_entry.get(), monster_gender = app.monster_gender_entry.get(), monster_type = app.monster_type_entry.get(), monster_species= app.monster_species_entry.get(), monster_subtype= app.monster_subtype_entry.get())
+  
   culprit = Culprit(culprit_name= app.culprit_name_entry.get(), culprit_gender= app.culprit_gender_entry.get())
   
-  main_db.create_episode(episode, setting, [actor], [monster], [culprit])
+  if monster.monster_name == '' and monster.monster_gender == '' and monster.monster_type == '' and monster.monster_species == '' and monster.monster_subtype == '':
+    monsters = []
+  else:
+    monsters = [monster]
+    
+  if actor.actor_name == '' and actor.character_name == '':
+    actors = []
+  else:
+    actors = [actor]
+    
+  if culprit.culprit_name == '' and culprit.culprit_gender == '':
+    culprits = []
+  else:
+    culprits = [culprit]
+  main_db.create_episode(episode, setting, actors, monsters, culprits)
   
   reset(app)
   
