@@ -93,6 +93,7 @@ def on_select(item):
   app.change_entry_text(app.setting_terrain_entry, setting.setting_terrain)
   
 def add_record(e):
+  
   episode = Episode(series_name= app.series_entry.get(), season= int(app.season_entry.get()), title = app.title_entry.get(), date_aired= app.aired_entry.get(), runtime= int(app.run_entry.get()), monster_real= app.monster_real_entry.get(), motive = app.motive_entry.get())
   
   setting = Setting(setting_place= app.setting_place_entry.get(), setting_terrain= app.setting_terrain_entry.get())
@@ -106,7 +107,14 @@ def add_record(e):
   reset()
   
 def update_record(e):
-  episode = Episode(series_name= app.series_entry.get(), season= int(app.season_entry.get()), title = app.title_entry.get(), date_aired= app.aired_entry.get(), runtime= int(app.run_entry.get()), monster_real= app.monster_real_entry.get(), motive = app.motive_entry.get())
+  item = app.tree.item(app.tree.focus())
+  episode_name = (item['values'][0])
+
+  episode_sql = f'SELECT * FROM episode_details WHERE title = \'{episode_name}\''
+  episode_details = main_db.read_sql(episode_sql)
+  episode_id = episode_details['episode_id'].iloc[0]
+  
+  episode = Episode(episode_id = episode_id, series_name= app.series_entry.get(), season= int(app.season_entry.get()), title = app.title_entry.get(), date_aired= app.aired_entry.get(), runtime= int(app.run_entry.get()), monster_real= app.monster_real_entry.get(), motive = app.motive_entry.get())
     
   setting = Setting(setting_place= app.setting_place_entry.get(), setting_terrain= app.setting_terrain_entry.get())
     
@@ -115,6 +123,8 @@ def update_record(e):
   culprit = Culprit(culprit_name= app.culprit_name_entry.get(), culprit_gender= app.culprit_gender_entry.get())
     
   main_db.update_episode(episode, setting, actor, monster, culprit)
+  
+  reset()
   
 
 def delete_record(e):
@@ -125,7 +135,7 @@ def delete_record(e):
   episode_id = episode_details['episode_id'].iloc[0]
   
   main_db.delete_episode(episode_id)
-  
+  clear('')
   reset()
   
   
@@ -188,7 +198,7 @@ app.tree.bind("<ButtonRelease-1>", clicker)
 app.delete_record_button.bind("<ButtonRelease-1>", delete_record)
 app.add_record_button.bind("<ButtonRelease-1>", add_record)
 app.clear_button.bind("<ButtonRelease-1>", clear)
-        
+app.update_record_button.bind("<ButtonRelease-1>", update_record)
 # Bindings
         
 

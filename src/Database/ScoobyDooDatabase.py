@@ -264,14 +264,17 @@ class ScoobyDooDatabase (Database):
     setting_id = self.create_setting(setting)
     self.update_episode_setting(episode.episode_id, setting_id)
     
-    monster_id = self.create_monster(monster)
-    self.add_episode_monster(episode.episode_id, monster_id)
+    if not (monster.monster_gender == '' and monster.monster_name == '' and monster.monster_species == '' and monster.monster_type == '' and monster.monster_subtype == ''):
+      monster_id = self.create_monster(monster)
+      self.add_episode_monster(episode.episode_id, monster_id)
     
-    culprit_id = self.create_culprit(culprit)
-    self.add_episode_culprit(episode.episode_id, culprit_id)
+    if not (culprit.culprit_gender == '' and culprit.culprit_gender == ''):
+      culprit_id = self.create_culprit(culprit)
+      self.add_episode_culprit(episode.episode_id, culprit_id)
     
-    actor_id = self.create_actor(actor)
-    self.add_episode_actor(episode.episode_id, actor_id)
+    if not (actor.actor_name == '' and actor.character_name == ''):
+      actor_id = self.create_actor(actor)
+      self.add_episode_actor(episode.episode_id, actor_id)
     
 
   def update_episode_details(self, episode: Episode, episode_id: int = 0):
@@ -288,6 +291,7 @@ class ScoobyDooDatabase (Database):
                     motive = '{episode.motive}'
                 WHERE episode_id = {episode_id};
       '''
+      print(sql)
       
       self.commit(sql)
 
