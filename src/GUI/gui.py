@@ -314,9 +314,10 @@ class App(tk.Tk):
         setting_place_entry.grid(row=28, column=4, sticky=tk.W)
         
         # SPACER
-        spacer_label = Label(self, text="")
-        spacer_label.grid(column=2, row=29)
-        spacer_label.grid(column=2,row=10)
+        spacer_label1 = Label(self, text="")
+        spacer_label2 = Label(self, text="")
+        spacer_label1.grid(column=2, row=29)
+        spacer_label2.grid(column=2,row=10)
         
         
         # BUTTONS
@@ -336,11 +337,18 @@ class App(tk.Tk):
             self,
             text='Export' 
         )
+        self.clear_button = ttk.Button(
+            self,
+            text='Clear' 
+        )
         
-        self.add_record_button.grid(column=2, row=30, sticky=tk.W, padx=5, pady=5)
-        self.update_record_button.grid(column=3, row=30, sticky=tk.W, padx=5, pady=5)
-        self.delete_record_button.grid(column=4, row=30, sticky=tk.W, padx=5, pady=5)
+        self.update_record_button.grid(column=2, row=30, padx=5, pady=5)
+        self.delete_record_button.grid(column=3, row=30, padx=5, pady=5)
+        self.add_record_button.grid(column=4, row=30, padx=5, pady=5)
+        self.clear_button.grid(column=5, row=30, padx=5, pady=5)
+        
         self.export_button.grid(column=6, row=16, padx=5, pady=5)
+        
         
         
         # Select Records
