@@ -87,8 +87,8 @@ class ScoobyDooDatabase (Database):
     monster_ids = [self.create_monster(monster) for monster in monsters]
     culprit_ids = [self.create_culprit(culprit) for culprit in culprits]
     
-    if not (setting.setting_place == '' and setting.setting_terrain == ''):
-      self.add_episode_setting(episode_id, setting_id)
+    
+    self.add_episode_setting(episode_id, setting_id)
     [self.add_episode_actor(episode_id, actor_id) for actor_id in actor_ids]
     [self.add_episode_monster(episode_id, monster_id) for monster_id in monster_ids]
     [self.add_episode_culprit(episode_id, culprit_id) for culprit_id in culprit_ids]
