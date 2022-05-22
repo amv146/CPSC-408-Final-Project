@@ -55,7 +55,6 @@ def on_select(e, app: App, main_db: ScoobyDooDatabase):
     monster_sql = f'SELECT * FROM monsters WHERE monster_id = {monster_id}'
     monster = main_db.read_sql(monster_sql)
     monsters = pd.concat([monsters, monster])
-    print(monsters, monster)
     # monsters.append(Monster(monster_name= monster['monster_name'].iloc[0], monster_gender = monster['monster_gender'].iloc[0], monster_type = monster['monster_type'].iloc[0], monster_species= monster['monster_species'].iloc[0], monster_subtype= monster['monster_subtype'].iloc[0]))
   app.monster_tree.change_table(monsters, drop_duplicates=False)
   
@@ -271,7 +270,7 @@ def __on_select__(menu: Menu):
     
 
 app.table(df, main_cols)
-app.reset_button.bind("<ButtonRelease-1>", lambda e, app = app, main_db = main_db: delete_record(e, app, main_db))
+app.reset_button.bind("<ButtonRelease-1>", lambda e, app = app, main_db = main_db: reset(app))
 
         
         
