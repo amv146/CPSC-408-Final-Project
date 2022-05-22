@@ -55,8 +55,9 @@ def on_select(e, app: App, main_db: ScoobyDooDatabase):
     monster_sql = f'SELECT * FROM monsters WHERE monster_id = {monster_id}'
     monster = main_db.read_sql(monster_sql)
     monsters = pd.concat([monsters, monster])
+    print(monsters, monster)
     # monsters.append(Monster(monster_name= monster['monster_name'].iloc[0], monster_gender = monster['monster_gender'].iloc[0], monster_type = monster['monster_type'].iloc[0], monster_species= monster['monster_species'].iloc[0], monster_subtype= monster['monster_subtype'].iloc[0]))
-  app.monster_tree.change_table(monsters)
+  app.monster_tree.change_table(monsters, drop_duplicates=False)
   
   episode_actor_sql = f'SELECT actor_id FROM episode_actors WHERE episode_id = {episode_id}'
   actor_ids = list(main_db.read_sql(episode_actor_sql)['actor_id'])
@@ -74,7 +75,7 @@ def on_select(e, app: App, main_db: ScoobyDooDatabase):
     culprit_sql = f'SELECT * FROM culprits WHERE culprit_id = {culprit_id}'
     culprit = main_db.read_sql(culprit_sql)
     culprits = pd.concat([culprits, culprit])
-  app.culprits_tree.change_table(culprits)
+  app.culprits_tree.change_table(culprits, drop_duplicates=False)
   
     
     
@@ -96,6 +97,7 @@ def on_select(e, app: App, main_db: ScoobyDooDatabase):
   
   num_monsters_sql = f'SELECT COUNT(*) AS num_monsters FROM episode_monsters WHERE episode_id = {episode_id}'
   num_monsters = main_db.read_sql(num_monsters_sql)['num_monsters'].iloc[0]
+  print(num_monsters_sql, num_monsters)
   app.monster_num_label.config(text=num_monsters)
   
   num_culprits_sql = f'SELECT COUNT(*) AS num_culprits FROM episode_culprits WHERE episode_id = {episode_id}'
@@ -138,7 +140,7 @@ def update_record(e, app: App, main_db: ScoobyDooDatabase):
     
   main_db.update_episode(episode, setting, actor, monster, culprit)
   
-  reset(e)
+  reset(app)
   
 
 def delete_record(e, app: App, main_db: ScoobyDooDatabase):
@@ -150,7 +152,7 @@ def delete_record(e, app: App, main_db: ScoobyDooDatabase):
   
   main_db.delete_episode(episode_id)
   clear(e, app)
-  reset(e)
+  reset(app)
   
   
   
