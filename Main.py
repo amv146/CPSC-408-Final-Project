@@ -27,6 +27,7 @@ main_cols = ['title', 'series_name', 'season', 'date_aired', 'run_time', 'settin
 
 
 def on_select_main_tree(e, app: App, main_db: ScoobyDooDatabase):
+  clear('', app)
   item = app.tree.item(app.tree.focus())
   app.change_entry_text(app.monster_type_entry, '')
   app.change_entry_text(app.monster_subtype_entry, '')
