@@ -6,6 +6,7 @@ from src.GUI.FilterHandler import FilterHandler
 from src.Database.ScoobyDooDatabase import ScoobyDooDatabase
 from src.Utils import *
 
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -19,6 +20,33 @@ app = App()
 filter_handler = FilterHandler(main_db)
 reset_val = False
 main_cols = ['title', 'series_name', 'season', 'date_aired', 'run_time', 'setting_place', 'setting_terrain']
+
+
+def clicker(e):
+    on_select(app.tree.item(app.tree.focus()))
+
+def on_select(item):
+  episode_name = (item['values'][0])
+  print(episode_name)
+  episode_sql = f'SELECT * FROM episode_details WHERE title = \'{episode_name}\''
+  episode_details = main_db.read_sql(episode_sql)
+  setting_id = df['setting_id'].iloc[0]
+  setting_sql = f'SELECT * FROM settings WHERE setting_id = {setting_id}'
+  setting_details = main_db.read_sql(setting_sql)
+  
+  app.change_entry_text(app.season_entry, episode_details['season'].iloc[0])
+  app.change_entry_text(app.series_entry, episode_details['series_name'].iloc[0])
+  app.change_entry_text(app.run_entry, episode_details['run_time'].iloc[0])
+  app.change_entry_text(app.motive_entry, episode_details['motive'].iloc[0])
+  app.change_entry_text(app.monster_real_entry, episode_details['monster_real'].iloc[0])
+  app.change_entry_text(app.aired_entry, episode_details['date_aired'].iloc[0])
+  app.change_entry_text(app.title_entry, episode_details['title'].iloc[0])
+  
+  app.change_entry_text(app.setting_place_entry, setting_details['setting_place'].iloc[0])
+  app.change_entry_text(app.setting_terrain_entry, setting_details['setting_terrain'].iloc[0])
+  
+  # app.seriesName = df['series_name']
+  print(df)
 
 def reset():
   filter_handler.reset_filter_values()
@@ -47,7 +75,14 @@ def __on_select__(menu: Menu):
 app.table(df, main_cols)
 app.reset_button.configure(command = reset)
 
+        
+        
+app.tree.bind("<ButtonRelease-1>", clicker) 
 
+        
+        
+# Bindings
+        
 
 
 for menu in app.menus:
