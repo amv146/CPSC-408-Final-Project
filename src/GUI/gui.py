@@ -206,15 +206,15 @@ class App(tk.Tk):
         self.monster_entry.grid(row=22, column=2, sticky=tk.W)
         
         self.monster_real_label = Label(self, text="Monster Real: ")
-        self.monster_real_label.grid(row=22, column=3, sticky=tk.E)
+        self.monster_real_label.grid(row=22, column=5, sticky=tk.E)
         self.monster_real_entry = Entry(self, textvariable= self.monster_real)
-        self.monster_real_entry.grid(row=22, column=4, sticky=tk.W)
+        self.monster_real_entry.grid(row=22, column=6, sticky=tk.W)
         
         self.monster_gender_label = Label(self, text="Monster Gender: ")
-        self.monster_gender_label.grid(row=22, column=5, sticky=tk.E)
+        self.monster_gender_label.grid(row=22, column=3, sticky=tk.E)
         
         self.monster_gender_entry = Entry(self, textvariable= self.monster_gender)
-        self.monster_gender_entry.grid(row=22, column=6, sticky=tk.W)
+        self.monster_gender_entry.grid(row=22, column=4, sticky=tk.W)
         
         self.monster_type_label = Label(self, text="Monster Type: ")
         self.monster_type_label.grid(row=24, column=1, sticky=tk.E)
