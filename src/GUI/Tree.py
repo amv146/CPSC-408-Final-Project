@@ -33,7 +33,11 @@ class Tree(Treeview):
       headings.append(heading)
       
     self.headings = headings
-    
+  
+  def reset(self):
+    for child in self.get_children():
+      self.delete(child)
+      
   def change_table(self, df: DataFrame):
     df = df[self.columns].drop_duplicates()
     for child in self.get_children():
