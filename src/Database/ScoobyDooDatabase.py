@@ -102,12 +102,17 @@ class ScoobyDooDatabase (Database):
     
     
     if result == -1:
-      sql = f'''INSERT INTO episode_details(series_name, season, title, date_aired, run_time, monster_real, motive) 
-                VALUES ('{episode.series_name}', {episode.season}, '{episode.title}', '{episode.date_aired}', {episode.runtime}, '{episode.monster_real}', '{episode.motive}')'''
+      try:
+        sql = f'''INSERT INTO episode_details(series_name, season, title, date_aired, run_time, monster_real, motive) 
+                  VALUES ('{episode.series_name}', {episode.season}, '{episode.title}', '{episode.date_aired}', {episode.runtime}, '{episode.monster_real}', '{episode.motive}')'''
 
-      self.commit(sql)
+        self.commit(sql)
 
-      result = self.query_episodes(episode)
+        result = self.query_episodes(episode)
+      
+      except mysql.connector.Error as error:
+        print("failed create: {}".format(error))
+        self.rollback()
 
     return result
   
@@ -115,12 +120,17 @@ class ScoobyDooDatabase (Database):
     result = self.query_settings(setting)
 
     if result == -1:
-      sql = f'''INSERT INTO settings(setting_terrain, setting_place) 
-                VALUES ('{setting.setting_terrain}', '{setting.setting_place}')'''
-                  
-      self.commit(sql)
+      try:
+        sql = f'''INSERT INTO settings(setting_terrain, setting_place) 
+                  VALUES ('{setting.setting_terrain}', '{setting.setting_place}')'''
+                    
+        self.commit(sql)
+        
+        result = self.query_settings(setting)
       
-      result = self.query_settings(setting)
+      except mysql.connector.Error as error:
+        print("failed create: {}".format(error))
+        self.rollback()
 
     return result
   
@@ -128,11 +138,16 @@ class ScoobyDooDatabase (Database):
     result = self.query_actors(actor)
 
     if result == -1:
-      sql = f'''INSERT INTO voice_actors(actor_name, character_name) 
-                VALUES ('{actor.actor_name}', '{actor.character_name}')'''
-      self.commit(sql)
+      try:
+        sql = f'''INSERT INTO voice_actors(actor_name, character_name) 
+                  VALUES ('{actor.actor_name}', '{actor.character_name}')'''
+        self.commit(sql)
 
-      result = self.query_actors(actor)
+        result = self.query_actors(actor)
+
+      except mysql.connector.Error as error:
+        print("failed create: {}".format(error))
+        self.rollback()
 
     return result
 
@@ -140,11 +155,16 @@ class ScoobyDooDatabase (Database):
     result = self.query_monsters(monster)
 
     if result == -1:
-      sql = f'''INSERT INTO monsters(monster_name, monster_gender, monster_type, monster_species, monster_subtype) 
-                VALUES ('{monster.monster_name}', '{monster.monster_gender}', '{monster.monster_type}', '{monster.monster_species}', '{monster.monster_subtype}')'''
-      self.commit(sql)
+      try:
+        sql = f'''INSERT INTO monsters(monster_name, monster_gender, monster_type, monster_species, monster_subtype) 
+                  VALUES ('{monster.monster_name}', '{monster.monster_gender}', '{monster.monster_type}', '{monster.monster_species}', '{monster.monster_subtype}')'''
+        self.commit(sql)
 
-      result = self.query_monsters(monster)
+        result = self.query_monsters(monster)
+      
+      except mysql.connector.Error as error:
+        print("failed create: {}".format(error))
+        self.rollback()
 
     return result
 
@@ -152,12 +172,18 @@ class ScoobyDooDatabase (Database):
     result = self.query_culprits(culprit)
     
     if result == -1:
-      sql = f'''INSERT INTO culprits(culprit_name, culprit_gender) 
-                VALUES ('{culprit.culprit_name}', '{culprit.culprit_gender}')'''
-                
-      self.commit(sql)
+      try:
+        sql = f'''INSERT INTO culprits(culprit_name, culprit_gender) 
+                  VALUES ('{culprit.culprit_name}', '{culprit.culprit_gender}')'''
+                  
+        self.commit(sql)
       
-      result = self.query_culprits(culprit)
+        result = self.query_culprits(culprit)
+      
+      except mysql.connector.Error as error:
+        print("failed create: {}".format(error))
+        self.rollback()
+
 
     return result
   
@@ -173,38 +199,57 @@ class ScoobyDooDatabase (Database):
   def add_episode_setting(self, episode_id: int = 0, setting_id: int = 0):
     self.refresh_cursor()
     
-    sql = f'''UPDATE episode_details
-              SET setting_id = {setting_id}
-              WHERE episode_id = {episode_id};
-    '''
-    
-    self.commit(sql)
+    try:
+      sql = f'''UPDATE episode_details
+                SET setting_id = {setting_id}
+                WHERE episode_id = {episode_id};
+      '''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed add: {}".format(error))
+        self.rollback()
 
   def add_episode_actor(self, episode_id: int = 0, actor_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''INSERT INTO episode_actors (episode_id, actor_id)
-              VALUES ({episode_id}, {actor_id});
-    '''
-    
-    self.commit(sql)
+    try:
+      sql = f'''INSERT INTO episode_actors (episode_id, actor_id)
+                VALUES ({episode_id}, {actor_id});
+      '''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed add: {}".format(error))
+        self.rollback()
 
   def add_episode_monster(self, episode_id: int = 0, monster_id: int = 0):
     self.refresh_cursor()
-    
-    sql = f'''INSERT INTO episode_monsters (episode_id, monster_id)
-              VALUES ({episode_id}, {monster_id});'''
-    
-    self.commit(sql)
+    try:
+      sql = f'''INSERT INTO episode_monsters (episode_id, monster_id)
+                VALUES ({episode_id}, {monster_id});'''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed add: {}".format(error))
+        self.rollback()
 
   def add_episode_culprit(self, episode_id: int = 0, culprit_id: int = 0):
     self.refresh_cursor()
     
-    sql = f'''INSERT INTO episode_culprits (episode_id, culprit_id)
-              VALUES ({episode_id}, {culprit_id});
-    '''
-    
-    self.commit(sql)
+    try:
+      sql = f'''INSERT INTO episode_culprits (episode_id, culprit_id)
+                VALUES ({episode_id}, {culprit_id});
+      '''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed add: {}".format(error))
+        self.rollback()
     
   #
   # END ADDS
@@ -217,79 +262,105 @@ class ScoobyDooDatabase (Database):
   def update_episode(self, episode: Episode, episode_id: int = 0):
     self.refresh_cursor()
     
-    sql = f'''UPDATE episode_details
-              SET series_name = '{episode.series_name}',
-                  season = {episode.season},
-                  title = '{episode.title}',
-                  date_aired = '{episode.date_aired}',
-                  run_time = {episode.runtime},
-                  monster_real = '{episode.monster_real}',
-                  motive = '{episode.motive}'
-              WHERE episode_id = {episode_id};
-    '''
-    
-    self.commit(sql)
+    try:
+      sql = f'''UPDATE episode_details
+                SET series_name = '{episode.series_name}',
+                    season = {episode.season},
+                    title = '{episode.title}',
+                    date_aired = '{episode.date_aired}',
+                    run_time = {episode.runtime},
+                    monster_real = '{episode.monster_real}',
+                    motive = '{episode.motive}'
+                WHERE episode_id = {episode_id};
+      '''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed update: {}".format(error))
+        self.rollback()
   
   def update_episode_setting(self, episode_id: int, setting_id: int):
     self.refresh_cursor()
     
-    sql = f'''UPDATE episode_details
-              SET setting_id = {setting_id}
-              WHERE episode_id = {episode_id};
-    '''
-    
-    self.commit(sql)
+    try:
+      sql = f'''UPDATE episode_details
+                SET setting_id = {setting_id}
+                WHERE episode_id = {episode_id};
+      '''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed update: {}".format(error))
+        self.rollback()
 
   def update_setting(self, setting: Setting, setting_id: int = 0):
     self.refresh_cursor()
     
-    sql = f'''UPDATE settings
-              SET setting_terrain = '{setting.setting_terrain}',
-                  setting_place = '{setting.setting_place}'
-              WHERE setting_id = {setting_id};
-    '''
+    try:
+      sql = f'''UPDATE settings
+                SET setting_terrain = '{setting.setting_terrain}',
+                    setting_place = '{setting.setting_place}'
+                WHERE setting_id = {setting_id};
+      '''
+      
+      self.commit(sql)
     
-    self.commit(sql)
+    except mysql.connector.Error as error:
+        print("failed update: {}".format(error))
+        self.rollback()
 
   def update_actor(self, actor: VoiceActor, actor_id: int = 0):
     self.refresh_cursor()
     
-    sql = f'''UPDATE voice_actors
-              SET actor_name = '{actor.actor_name}',
-                  character_name = '{actor.character_name}'
-              WHERE actor_id = {actor_id};
-    '''
-    
-    self.commit(sql)
+    try:
+      sql = f'''UPDATE voice_actors
+                SET actor_name = '{actor.actor_name}',
+                    character_name = '{actor.character_name}'
+                WHERE actor_id = {actor_id};
+      '''
+      
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed update: {}".format(error))
+        self.rollback()
 
   def update_monster(self, monster: Monster, monster_id: int = 0):
     self.refresh_cursor()
     
-    sql = f'''UPDATE monsters
-              SET monster_name = '{monster.monster_name}',
-                  monster_gender = '{monster.monster_gender}',
-                  monster_type = '{monster.monster_type}',
-                  monster_subtype = '{monster.monster_subtype}',
-                  monster_species = '{monster.monster_species}'
-              WHERE monster_id = {monster_id};
-    '''
+    try:
+      sql = f'''UPDATE monsters
+                SET monster_name = '{monster.monster_name}',
+                    monster_gender = '{monster.monster_gender}',
+                    monster_type = '{monster.monster_type}',
+                    monster_subtype = '{monster.monster_subtype}',
+                    monster_species = '{monster.monster_species}'
+                WHERE monster_id = {monster_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed update: {}".format(error))
+        self.rollback()
 
   def update_culprit(self, culprit: Culprit, culprit_id: int = 0):
     self.refresh_cursor()
-
-    print(culprit.culprit_name)
-    print(culprit.culprit_gender)
-    print(culprit_id)
     
-    sql = f'''UPDATE culprits
-              SET culprit_name = '{culprit.culprit_name}',
-                  culprit_gender = '{culprit.culprit_gender}'
-              WHERE culprit_id = {culprit_id};
-    '''
+    try:
+      sql = f'''UPDATE culprits
+                SET culprit_name = '{culprit.culprit_name}',
+                    culprit_gender = '{culprit.culprit_gender}'
+                WHERE culprit_id = {culprit_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed update: {}".format(error))
+        self.rollback()
 
   #
   # END UPDATES
@@ -302,12 +373,17 @@ class ScoobyDooDatabase (Database):
   def delete_episode(self, episode_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_details
-              SET is_deleted = 1
-              WHERE episode_id = {episode_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_details
+                SET is_deleted = 1
+                WHERE episode_id = {episode_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
     self.delete_episode_actor(episode_id)
     self.delete_episode_monster(episode_id)
@@ -316,48 +392,67 @@ class ScoobyDooDatabase (Database):
   def delete_setting(self, setting_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE settings
-              SET is_deleted = 1
-              WHERE setting_id = {setting_id};
-    '''
+    try:
+      sql = f'''UPDATE settings
+                SET is_deleted = 1
+                WHERE setting_id = {setting_id};
+      '''
+      self.commit(sql)
 
-    self.commit(sql)
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
     self.delete_setting_episode(setting_id)
 
   def delete_actor(self, actor_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE voice_actors
-              SET is_deleted = 1
-              WHERE actor_id = {actor_id};
-    '''
+    try:
+      sql = f'''UPDATE voice_actors
+                SET is_deleted = 1
+                WHERE actor_id = {actor_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
     self.delete_actor_episode(actor_id)
 
   def delete_monster(self, monster_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE monsters
-              SET is_deleted = 1
-              WHERE monster_id = {monster_id};
-    '''
+    try:
+      sql = f'''UPDATE monsters
+                SET is_deleted = 1
+                WHERE monster_id = {monster_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
     self.delete_monster_episode(monster_id)
   
   def delete_culprit(self, culprit_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE culprits
-              SET is_deleted = 1
-              WHERE culprit_id = {culprit_id};
-    '''
+    try:
+      sql = f'''UPDATE culprits
+                SET is_deleted = 1
+                WHERE culprit_id = {culprit_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
     self.delete_culprit_episode(culprit_id)
 
@@ -369,35 +464,50 @@ class ScoobyDooDatabase (Database):
   def delete_single_episode_actor(self, episode_id: int, actor_id: int):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_actors
-              SET is_deleted_episode_actors = 1
-              WHERE episode_id = {episode_id}
-                AND actor_id = {actor_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_actors
+                SET is_deleted_episode_actors = 1
+                WHERE episode_id = {episode_id}
+                  AND actor_id = {actor_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_single_episode_monster(self, episode_id: int, monster_id: int):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_monsters
-              SET is_deleted_episode_monsters = 1
-              WHERE episode_id = {episode_id}
-                AND monster_id = {monster_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_monsters
+                SET is_deleted_episode_monsters = 1
+                WHERE episode_id = {episode_id}
+                  AND monster_id = {monster_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
   
   def delete_single_episode_culprit(self, episode_id: int, culprit_id: int):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_culprits
-              SET is_deleted = 1
-              WHERE episode_id = {episode_id}
-                AND culprit_id = {culprit_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_culprits
+                SET is_deleted = 1
+                WHERE episode_id = {episode_id}
+                  AND culprit_id = {culprit_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   # 
   # END SINGLE DELETES
@@ -410,72 +520,107 @@ class ScoobyDooDatabase (Database):
   def delete_setting_episode(self, setting_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_details
-              SET setting_id = NULL
-              WHERE setting_id = {setting_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_details
+                SET setting_id = NULL
+                WHERE setting_id = {setting_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_episode_actor(self, episode_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_actors
-              SET is_deleted_episode_actors = 1
-              WHERE episode_id = {episode_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_actors
+                SET is_deleted_episode_actors = 1
+                WHERE episode_id = {episode_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_actor_episode(self, actor_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_actors
-              SET is_deleted_episode_actors = 1
-              WHERE actor_id = {actor_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_actors
+                SET is_deleted_episode_actors = 1
+                WHERE actor_id = {actor_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_episode_monster(self, episode_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_monsters
-              SET is_deleted_episode_monsters = 1
-              WHERE episode_id = {episode_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_monsters
+                SET is_deleted_episode_monsters = 1
+                WHERE episode_id = {episode_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_monster_episode(self, monster_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_monsters
-              SET is_deleted_episode_monsters = 1
-              WHERE monster_id = {monster_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_monsters
+                SET is_deleted_episode_monsters = 1
+                WHERE monster_id = {monster_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_episode_culprit(self, episode_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_culprits
-              SET is_deleted_episode_culprits = 1
-              WHERE episode_id = {episode_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_culprits
+                SET is_deleted_episode_culprits = 1
+                WHERE episode_id = {episode_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   def delete_culprit_episode(self, culprit_id: int = 0):
     self.refresh_cursor()
 
-    sql = f'''UPDATE episode_culprits
-              SET is_deleted_episode_culprits = 1
-              WHERE culprit_id = {culprit_id};
-    '''
+    try:
+      sql = f'''UPDATE episode_culprits
+                SET is_deleted_episode_culprits = 1
+                WHERE culprit_id = {culprit_id};
+      '''
 
-    self.commit(sql)
+      self.commit(sql)
+    
+    except mysql.connector.Error as error:
+        print("failed delete: {}".format(error))
+        self.rollback()
 
   # 
   # END DELETE LINKING TABLES

@@ -23,6 +23,11 @@ class Database:
     self.cursor.execute(sql)
     self.database.commit()
     self.refresh_cursor()
+
+  def rollback(self):
+    self.refresh_cursor()
+    self.database.rollback()
+    self.refresh_cursor()
   
   def refresh_cursor(self):
     try:

@@ -1,31 +1,31 @@
 USE scooby_doo;
 
-ALTER TABLE Culprits
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+# ALTER TABLE Culprits
+#     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Monsters
+#     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Settings
+#     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Voice_Actors
+#     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Episode_Details
+#     ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Episode_Actors
+#     ADD COLUMN is_deleted_episode_actors INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Episode_Culprits
+#     ADD COLUMN is_deleted_episode_culprits INT NOT NULL DEFAULT 0;
+#
+# ALTER TABLE Episode_Monsters
+#     ADD COLUMN is_deleted_episode_monsters INT NOT NULL DEFAULT 0;
 
-ALTER TABLE Monsters
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Settings
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Voice_Actors
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Episode_Details
-    ADD COLUMN is_deleted INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Episode_Actors
-    ADD COLUMN is_deleted_episode_actors INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Episode_Culprits
-    ADD COLUMN is_deleted_episode_culprits INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Episode_Monsters
-    ADD COLUMN is_deleted_episode_monsters INT NOT NULL DEFAULT 0;
-
-ALTER TABLE Episode_Monsters
-    DROP COLUMN is_deleted;
+# don't know if this has already been done
+SET autocommit = OFF;
 
 SELECT *
 FROM Culprits;
