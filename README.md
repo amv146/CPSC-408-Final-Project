@@ -20,7 +20,7 @@
    
 3. N/A
 
-4. Class notes
+4. Class notes  
    https://www.geeksforgeeks.org/commit-rollback-operation-in-python/  
    https://www.brentozar.com/archive/2020/02/what-are-soft-deletes-and-how-are-they-implemented/  
    https://www.pythontutorial.net/tkinter/  
