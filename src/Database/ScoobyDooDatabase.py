@@ -84,8 +84,8 @@ class ScoobyDooDatabase (Database):
     episode_id = self.create_episode_details(episode)
     setting_id = self.create_setting(setting)
     actor_ids = [self.create_actor(actor) for actor in actors]
-    monster_ids = [self.create_monster(monster) for monster in monsters]
-    culprit_ids = [self.create_culprit(culprit) for culprit in culprits]
+    monster_ids = [self.create_monster(monster)[0] for monster in monsters]
+    culprit_ids = [self.create_culprit(culprit)[0] for culprit in culprits]
     
     
     self.add_episode_setting(episode_id, setting_id)
@@ -134,14 +134,16 @@ class ScoobyDooDatabase (Database):
 
     return result
   
-  def create_actor(self, actor: VoiceActor) -> int:
+  def create_actor(self, actor: VoiceActor) -> tuple[int, bool]:
     result = self.query_actors(actor)
-
+    in_db = True
+    
     if result == -1:
       try:
         sql = f'''INSERT INTO voice_actors(actor_name, character_name) 
                   VALUES ('{actor.actor_name}', '{actor.character_name}')'''
         self.commit(sql)
+        in_db = False
 
         result = self.query_actors(actor)
 
@@ -149,10 +151,11 @@ class ScoobyDooDatabase (Database):
         print("failed create: {}".format(error))
         self.rollback()
 
-    return result
+    return result, in_db
 
-  def create_monster(self, monster: Monster) -> int:
+  def create_monster(self, monster: Monster) -> tuple[int, bool]:
     result = self.query_monsters(monster)
+    in_db = True
 
     if result == -1:
       try:
@@ -161,15 +164,18 @@ class ScoobyDooDatabase (Database):
         self.commit(sql)
 
         result = self.query_monsters(monster)
+        in_db = False
       
       except connector.Error as error:
         print("failed create: {}".format(error))
         self.rollback()
 
-    return result
+    return result, in_db
 
-  def create_culprit(self, culprit: Culprit) -> int:
+  def create_culprit(self, culprit: Culprit) -> tuple[int, bool]:
     result = self.query_culprits(culprit)
+    in_db = True
+
     
     if result == -1:
       try:
@@ -177,6 +183,7 @@ class ScoobyDooDatabase (Database):
                   VALUES ('{culprit.culprit_name}', '{culprit.culprit_gender}')'''
                   
         self.commit(sql)
+        in_db = False
       
         result = self.query_culprits(culprit)
       
@@ -185,7 +192,7 @@ class ScoobyDooDatabase (Database):
         self.rollback()
 
 
-    return result
+    return result, in_db
   
   #
   # END CREATES
@@ -227,6 +234,7 @@ class ScoobyDooDatabase (Database):
 
   def add_episode_monster(self, episode_id: int = 0, monster_id: int = 0):
     self.refresh_cursor()
+    
     try:
       sql = f'''INSERT INTO episode_monsters (episode_id, monster_id)
                 VALUES ({episode_id}, {monster_id});'''
@@ -266,16 +274,19 @@ class ScoobyDooDatabase (Database):
     self.update_episode_setting(episode.episode_id, setting_id)
     
     if not (monster.monster_gender == '' and monster.monster_name == '' and monster.monster_species == '' and monster.monster_type == '' and monster.monster_subtype == ''):
-      monster_id = self.create_monster(monster)
-      self.add_episode_monster(episode.episode_id, monster_id)
+      monster_id, in_db = self.create_monster(monster)
+      if not in_db:
+        self.add_episode_monster(episode.episode_id, monster_id)
     
     if not (culprit.culprit_gender == '' and culprit.culprit_gender == ''):
-      culprit_id = self.create_culprit(culprit)
-      self.add_episode_culprit(episode.episode_id, culprit_id)
+      culprit_id, in_db = self.create_culprit(culprit)
+      if not in_db:
+        self.add_episode_culprit(episode.episode_id, culprit_id)
     
     if not (actor.actor_name == '' and actor.character_name == ''):
-      actor_id = self.create_actor(actor)
-      self.add_episode_actor(episode.episode_id, actor_id)
+      actor_id, in_db = self.create_actor(actor)
+      if not in_db:
+        self.add_episode_actor(episode.episode_id, actor_id)
     
 
   def update_episode_details(self, episode: Episode, episode_id: int = 0):

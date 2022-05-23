@@ -3,8 +3,6 @@ import tkinter as tk
 from tkinter import END, Entry, Label, ttk, StringVar, OptionMenu, font
 from tkinter.messagebox import showinfo
 
-from numpy import character
-
 from src.GUI.Tree import Tree
 from src.GUI.Menu import Menu
 from src.GUI.Filters import *
